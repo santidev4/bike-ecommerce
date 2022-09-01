@@ -1,0 +1,123 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin
+  client
+}
+
+model Product {
+  id           Int           @id @default(autoincrement())
+  name         String
+  description  String
+  price        Float
+  img          String
+  stock        Int
+  weight       Int
+  height       Int // en cm  
+  width        Int
+  length       Int
+  // Relations
+  order_detail order_detail?
+  // Products --n-n-- Category
+  category     Category[]
+  // Una brand puede tener muchos products
+  brand_id     Int
+  Brand        Brand         @relation(fields: [brand_id], references: [id])
+}
+
+model Brand {
+  id       Int       @id @default(autoincrement())
+  name     String
+  // Relations
+  // Una brand puede tener muchos products
+  Products Product[]
+}
+
+model Province {
+  id      Int       @id @default(autoincrement())
+  name    String
+  // Relations
+  // Una provincia puede tener muchas direcciones
+  address Address[]
+}
+
+model Category {
+  id      Int       @id @default(autoincrement())
+  name    String
+  // Relations
+  // Products --n-n-- Category
+  product Product[]
+}
+
+model User {
+  id        String    @id @default(uuid())
+  username  String    @unique
+  password  String
+  firstName String
+  lastName  String
+  email     String
+  document  Int
+  avatar    String
+  role      Role      @default(client)
+  //  Relations
+  orders    Order[] //  Un cliente puede tener muchas ordenes
+  address   Address[] // Un cliente puede tener muchas direcciones
+}
+
+model Address {
+  id          Int      @id @default(autoincrement())
+  cp          Int
+  city        String
+  street      String
+  number      Int
+  references  String?
+  // Relations
+  // Un cliente puede tener muchas direcciones
+  user_id     String
+  User        User     @relation(fields: [user_id], references: [id])
+  // Una provincia puede tener muchas direcciones
+  province_id Int
+  province    Province @relation(fields: [province_id], references: [id])
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  // Relations
+  //  Un cliente puede tener muchas ordenes
+  user_id String         @unique
+  User    User           @relation(fields: [user_id], references: [id])
+  // Una orden puede tener muchos order_products
+  orderId order_detail[]
+}
+
+model order_detail {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  createdAt DateTime @default(now())
+  // Relations
+
+  productId Int     @unique
+  product   Product @relation(fields: [productId], references: [id])
+  // Una order puede tener muchas order_detail
+  order_id  Int     @unique
+  order     Order   @relation(fields: [order_id], references: [id])
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}
