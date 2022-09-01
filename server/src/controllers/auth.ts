@@ -45,11 +45,11 @@ const loginUser = async (req: Request, res: Response) => {
       username: user.username,
       id: user.id
     }
-    // TODO agregar property isAuthenticated a req.session. Se cambia en node_modules-types-express-session
+    // TODO agregar property isAdmin a req.session. Se cambia en node_modules-types-express-session
 
-    req.session.isAuth = true
-    console.log(req.isAuthenticated)
-    console.log(req.session)
+    req.session.isAdmin = true
+    console.log(req.sessionStore, 'sessionStore')
+    console.log(req.session, 'session')
     const token = jwt.sign(userForToken, process.env.SECRET!, { expiresIn: '3d' })
     res.status(200).send({
       token,

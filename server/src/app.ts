@@ -19,8 +19,7 @@ interface ErrorStatus extends ErrorRequestHandler {
 server.use(
   expressSession({
     cookie: {
-      // maxAge: 7 * 24 * 60 * 60 * 1000 // ms
-      maxAge: 5 * 1000
+      maxAge: 7 * 24 * 60 * 60 * 1000 // ms
     },
     secret: process.env.SECRET!,
     // exclamation tells TypeScript that even though something looks like it could be null, it can trust you that it's not

@@ -1,7 +1,18 @@
 import { PrismaClient } from '@prisma/client'
-import { Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 
 const prisma = new PrismaClient()
+
+const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
+  // Check if the requesting user is marked as admin in database
+  const user = await prisma.user.findFirst({ where: { username: req.body.username } }) // check in database
+  const isAdmin = user?.role === 'admin'
+  if (isAdmin) {
+    next()
+  } else {
+    res.redirect('/home')
+  }
+}
 
 const getDbProducts = async (req: Request, res: Response) => {
   try {
@@ -67,6 +78,7 @@ const getBrands = async (req: Request, res: Response) => {
 }
 
 module.exports = {
+  isAdmin,
   getDbProducts,
   postProduct,
   postCategory,
