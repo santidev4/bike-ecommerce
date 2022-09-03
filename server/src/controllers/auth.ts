@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import { PrismaClient } from '@prisma/client'
@@ -41,15 +42,18 @@ const loginUser = async (req: Request, res: Response) => {
       : await bcrypt.compare(body.password, user.password)
 
     if (!(user && passwordCorrect)) return res.status(401).json({ error: 'invalid username or password' })
+
     const userForToken = {
       username: user.username,
       id: user.id
     }
-    // TODO agregar property isAdmin a req.session. Se cambia en node_modules-types-express-session
 
-    req.session.isAdmin = true
-    console.log(req.sessionStore, 'sessionStore')
-    console.log(req.session, 'session')
+    // TODO agregar property isAdmin a req.session. Se cambia en node_modules-types-express-session
+    // TODO metodos para autorizar admin: jwt, coockie session guardando id del user, encryptar jwt con bcrypt
+    req.session.userId = user.id
+
+    // TODO guardar role en cache para optimizar
+
     const token = jwt.sign(userForToken, process.env.SECRET!, { expiresIn: '3d' })
     res.status(200).send({
       token,

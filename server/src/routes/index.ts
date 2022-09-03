@@ -1,5 +1,6 @@
 import { Router } from 'express'
-const { isAdmin, getDbProducts, postProduct, getCategories, postCategory, postBrand, getBrands } = require('../controllers/index')
+const { getDbProducts, postProduct, getCategories, postCategory, postBrand, getBrands } = require('../controllers/index')
+const { isAdmin } = require('../midlleware/isAdmin')
 
 const router = Router()
 
