@@ -1,15 +1,11 @@
+import { Request, Response, NextFunction } from 'express'
 import { PrismaClient } from '@prisma/client'
-import { Request, Response } from 'express'
 
 const prisma = new PrismaClient()
 
-const getDbProducts = async (req: Request, res: Response) => {
-  try {
-    const users = await prisma.product.findMany()
-    res.send(users)
-  } catch (error) {
-    console.error(error)
-  }
+const permit = (req: Request, res: Response, next: NextFunction) => {
+  if (req.session && req.session.isAdmin) return next()
+  else return res.sendStatus(401)
 }
 
 const postProduct = async (req: Request, res: Response) => {
@@ -36,15 +32,6 @@ const postCategory = async (req: Request, res: Response) => {
   }
 }
 
-const getCategories = async (req: Request, res: Response) => {
-  try {
-    const categories = await prisma.category.findMany()
-    res.send(categories)
-  } catch (error) {
-    console.error(error)
-  }
-}
-
 const postBrand = async (req: Request, res: Response) => {
   try {
     const body = req.body
@@ -57,20 +44,9 @@ const postBrand = async (req: Request, res: Response) => {
   }
 }
 
-const getBrands = async (req: Request, res: Response) => {
-  try {
-    const allBrands = await prisma.brand.findMany()
-    res.send(allBrands)
-  } catch (error) {
-    console.error(error)
-  }
-}
-
 module.exports = {
-  getDbProducts,
   postProduct,
   postCategory,
-  getCategories,
   postBrand,
-  getBrands
+  permit
 }

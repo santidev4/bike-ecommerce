@@ -1,10 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import './index.css'
+import { ThemeProvider } from 'styled-components'
+import { GlobalStyle } from './components/styles/Global.styled'
+
+const theme = {
+  colors: {
+    backgroundColor: '',
+    lettersColor: '',
+    primary: '#FCBC3D',
+    secondary: '#F26426'
+  }
+}
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <GlobalStyle />
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </ThemeProvider>
 )

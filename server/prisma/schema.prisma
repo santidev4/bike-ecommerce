@@ -37,7 +37,7 @@ model Product {
 
 model Brand {
   id       Int       @id @default(autoincrement())
-  name     String
+  name     String    @unique
   // Relations
   // Una brand puede tener muchos products
   Products Product[]
@@ -60,18 +60,18 @@ model Category {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  username  String    @unique
-  password  String
-  firstName String
-  lastName  String
-  email     String
-  document  Int
-  avatar    String
-  role      Role      @default(client)
+  id           String    @id @default(uuid())
+  username     String    @unique
+  password     String
+  firstName    String
+  lastName     String
+  email        String
+  document     Int
+  avatar       String
+  role         Role      @default(client)
   //  Relations
-  orders    Order[] //  Un cliente puede tener muchas ordenes
-  address   Address[] // Un cliente puede tener muchas direcciones
+  orders       Order[] //  Un cliente puede tener muchas ordenes
+  address      Address[] // Un cliente puede tener muchas direcciones
 }
 
 model Address {
