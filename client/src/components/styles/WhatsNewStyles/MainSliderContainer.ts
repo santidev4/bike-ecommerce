@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const WhatsNewContainer = styled.section`
+export const MainSliderCotainer = styled.section`
     display: flex;
     justify-content: center;
     padding-top: 40px;

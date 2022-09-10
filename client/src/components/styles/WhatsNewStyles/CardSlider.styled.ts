@@ -1,16 +1,7 @@
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
 
-interface Props {
-    position?: number   
-    index?: number
-}
 
-export const CardSlider = styled(motion.article).attrs(() => ({
-    initial: {scale: 0, rotation: -180},
-    // animate: {rotate: 0, left: `30vw`, scale: `${props => props.position}`},
-    transition: { type: 'spring', stiffness: 260, damping: 20}
-}))`
+export const CardSlider = styled.article`
     width: 350px;
     height: 450px;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
