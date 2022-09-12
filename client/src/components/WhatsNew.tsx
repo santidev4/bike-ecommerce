@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { CardSlider } from './styles/WhatsNewStyles/CardSlider.styled'
-import { Slider } from './styles/WhatsNewStyles/Slider.styled'
 import { MainSliderCotainer }  from './styles/WhatsNewStyles/MainSliderContainer'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
 import { Navigation, Pagination } from 'swiper'
+import { MainSectionContainer } from './styles/WhatsNewStyles/MainSectionContainer'
+import { SectionTitle } from './styles/WhatsNewStyles/SectionTitle'
+import 'swiper/css'
 import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import './styles/Slider/Slider.css'
 
 const articles = [
     {title: 'bicicleta',
@@ -44,8 +47,11 @@ function WhatsNew(): JSX.Element {
   //TODO usar swipeable para darle funcionalidad en mobile
 
   return (
-    <>
-      <h2>What's NEW</h2>
+    <MainSectionContainer>
+
+      <SectionTitle>
+        <h2>What's NEW</h2>
+      </SectionTitle>
       <Swiper
       modules={[Navigation, Pagination]}
       navigation
@@ -56,9 +62,9 @@ function WhatsNew(): JSX.Element {
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}
       >
-      <button onClick={onLeft}>{`<`}</button>
+
       {articles.map((art, index) => (
-                <SwiperSlide>
+        <SwiperSlide key={index}>
                   <CardSlider>
                       <img src={art.img} alt="" />
                       <h3>{art.title}</h3>
@@ -66,7 +72,6 @@ function WhatsNew(): JSX.Element {
                   </CardSlider>
                   </SwiperSlide>
               ))}
-      <button onClick={onRight}>{`>`}</button>
 
       </Swiper>
       <MainSliderCotainer>
@@ -84,7 +89,7 @@ function WhatsNew(): JSX.Element {
             <button onClick={onRight}>{`>`}</button>
           </Slider> */}
       </MainSliderCotainer>
-    </>
+    </MainSectionContainer>
   )
 }
 
