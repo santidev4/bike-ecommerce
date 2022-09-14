@@ -10,6 +10,8 @@ export const GlobalStyle = createGlobalStyle`
     body {
         font-family: 'Montserrat', sans-serif;
         max-width: 1920px;
-        padding: 0 30px;
+        padding: 0;
+        margin: 0;
+        position: relative;
     } 
 `

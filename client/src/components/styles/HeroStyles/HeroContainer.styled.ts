@@ -5,6 +5,7 @@ export const HeroContainer = styled.div`
     justify-content: center;
     flex-direction: row;
     
+    
     div {
         /* overflow: hidden; */
         position: absolute;
