@@ -10,6 +10,10 @@ const theme = {
     lettersColor: '',
     primary: '#FCBC3D',
     secondary: '#F26426'
+  },
+  size: {
+    navHeight: '70px',
+    footerHeight: '200px'
   }
 }
 

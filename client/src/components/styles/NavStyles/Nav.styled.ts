@@ -4,7 +4,7 @@ export const StyledNav = styled.nav`
   background-color: hsl(120, 100%, 100%);
   position: sticky;
   top: 0;
-  height: 70px;
+  height: ${({theme}) => theme.size.navHeight};
   width: 100%;
   max-width: 1920px;
   display: flex;

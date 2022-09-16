@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
 export const FooterMainContainer = styled.section`
-  width: 100vw;
-  height: 200px;
+  width: 100%;
+  height: ${({theme}) => theme.size.footerHeight};
   background-color: hsla(20, 10%, 10%, 0.9);
   color: white;
   display: flex;

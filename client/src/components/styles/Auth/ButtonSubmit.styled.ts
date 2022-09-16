@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Button = styled.button`
+export const ButtonSubmit = styled.input.attrs({type: 'submit', value: 'Log In'})`
     background-color: ${({theme}) => theme.colors.primary};
     color: rgb(40, 40, 40);
     border-radius: 10px;
@@ -18,5 +18,11 @@ export const Button = styled.button`
         background-color: ${({theme}) => theme.colors.secondary};
         color: white;
         transition: all 0.3s;
+    }
+
+    &:disabled{
+      color: hsla(100, 0%, 0%, 0.3);
+      background-color: hsla(0, 30%, 90%, 0.6);
+      cursor: not-allowed;
     }
 `
