@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
-export const ButtonSubmit = styled.input.attrs({type: 'submit', value: 'Log In'})`
+export const ButtonSubmit = styled.input.attrs(props=> ({
+  type: 'submit',
+  value: props.value
+  }
+))`
     background-color: ${({theme}) => theme.colors.primary};
     color: rgb(40, 40, 40);
     border-radius: 10px;

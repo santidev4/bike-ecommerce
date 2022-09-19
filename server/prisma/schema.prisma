@@ -63,11 +63,11 @@ model User {
   id           String    @id @default(uuid())
   username     String    @unique
   password     String
-  firstName    String
-  lastName     String
+  firstName    String?
+  lastName     String?
   email        String
-  document     Int
-  avatar       String
+  document     Int?
+  avatar       String?
   role         Role      @default(client)
   //  Relations
   orders       Order[] //  Un cliente puede tener muchas ordenes

@@ -9,7 +9,7 @@ const prisma = new PrismaClient()
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const { username, password, firstName, lastName, email, document, avatar } = req.body
+    const { username, password, email } = req.body
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
 
@@ -17,11 +17,7 @@ const createUser = async (req: Request, res: Response) => {
       data: {
         username,
         password: passwordHash,
-        firstName,
-        lastName,
-        email,
-        document,
-        avatar
+        email
       }
     })
     res.send(user)

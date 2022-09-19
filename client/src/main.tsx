@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import { ThemeProvider } from 'styled-components'
 import { GlobalStyle } from './components/styles/Global.styled'
+import { QueryClientProvider, QueryClient,  } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
+
+const queryClient = new QueryClient()
 
 const theme = {
   colors: {
@@ -20,8 +24,11 @@ const theme = {
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ThemeProvider theme={theme}>
     <GlobalStyle />
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <React.StrictMode>
+        <ReactQueryDevtools />
+        <App />
+      </React.StrictMode>
+    </QueryClientProvider>
   </ThemeProvider>
 )
