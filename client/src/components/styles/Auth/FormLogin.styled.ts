@@ -4,7 +4,6 @@ export const FormLogin = styled.form`
   display: flex;
   flex-direction: column;
   max-width: 400px;
-  /* justify-content: center; */
   align-items: center;
   padding: 30px 75px 75px 75px;
   border-radius: 10px;

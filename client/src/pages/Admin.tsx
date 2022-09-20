@@ -1,7 +1,13 @@
+import Dashboard from "../components/Dashboard"
+import SideBar from "../components/SideBar"
+import { AdminContainer } from "../components/styles/Admin/AdminContainer.styled"
 
 function Admin() {
   return (
-    <div>Admin</div>
+    <AdminContainer>
+      <SideBar />
+      <Dashboard />
+    </AdminContainer>
   )
 }
 

@@ -17,7 +17,7 @@ const theme = {
   },
   size: {
     navHeight: '70px',
-    footerHeight: '200px'
+    footerHeight: '170px'
   }
 }
 
