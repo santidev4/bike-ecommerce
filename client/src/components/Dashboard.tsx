@@ -1,14 +1,23 @@
 import { DashboardContainer } from "./styles/Admin/DashboardContainer.styled"
 import { DescriptionProduct } from "./styles/Admin/DescriptionProduct.styled"
 import { ProductsForm } from "./styles/Admin/ProductsForm.styled"
-import { Select, Option } from "./styles/Admin/Select.styled"
+// import { Select, Option } from "./styles/Admin/Select.styled"
 import { ButtonSubmit } from "./styles/Auth/ButtonSubmit.styled"
 import { Input } from "./styles/Auth/Input.styled"
 import { useForm } from 'react-hook-form'
 import { ProductType } from '../types/AdminTypes'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated'
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+]
+
 
 function Dashboard() {
-
+  const animatedComponents = makeAnimated()
   const { register, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<ProductType>({ mode: 'onChange' })
 
   const onSubmit = (data: ProductType) => {
@@ -53,11 +62,14 @@ function Dashboard() {
         </div>
         <div>
           <label htmlFor="">categories</label>
-          <Select {...register('category', { required: true })}>
-            <Option value="bike">bike</Option>
-            <Option value="accesories">accesories</Option>
-            <Option value="tire">tire</Option>
-          </Select>
+          <Select 
+            defaultValue={{ label: 'Choose categories', value: 'empty' }}
+            options={options}
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            isMulti
+          />
+
           { errors.category?.type === 'required' && <p>choose category</p> }
         </div>
         <div>

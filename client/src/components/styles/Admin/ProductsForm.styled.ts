@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const ProductsForm = styled.form`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   padding: 30px;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
