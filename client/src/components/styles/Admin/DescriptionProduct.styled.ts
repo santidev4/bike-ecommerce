@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const DescriptionProduct = styled.textarea`
-  width: 400px;
+  width: 300px;
   height: 60px;
   border-radius: 15px;
   border: 1px solid rgba(0, 0 ,0, 0.5);
