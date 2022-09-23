@@ -1,13 +1,13 @@
 import { DashboardContainer } from "./styles/Admin/DashboardContainer.styled"
 import { DescriptionProduct } from "./styles/Admin/DescriptionProduct.styled"
 import { ProductsForm, Row, Column } from "./styles/Admin/ProductsForm.styled"
-// import { Select, Option } from "./styles/Admin/Select.styled"
 import { ButtonSubmit } from "./styles/Auth/ButtonSubmit.styled"
 import { Input } from "./styles/Auth/Input.styled"
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { ProductType } from '../types/AdminTypes'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
+import { ReactElement } from "react"
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -18,10 +18,11 @@ const options = [
 
 function Dashboard() {
   const animatedComponents = makeAnimated()
-  const { register, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<ProductType>({ mode: 'onChange' })
+  const { register, formState: { errors, isDirty, isValid }, handleSubmit, control } = useForm<ProductType>({ mode: 'onBlur' })
 
   const onSubmit = (data: ProductType) => {
     console.log('data', data)
+    console.log('price', typeof(data.price))
   }
 
   return (
@@ -79,7 +80,7 @@ function Dashboard() {
         <Column>
           <Row>
             <Column>
-            <label htmlFor="">categories</label>
+            {/* <label htmlFor="">categories</label>
             <Select 
               // defaultValue={{ label: 'Choose category', value: 'empty' }}
               options={options}
@@ -88,8 +89,18 @@ function Dashboard() {
               isMulti
               />
 
-            { errors.category?.type === 'required' && <p>choose category</p> }
-              </Column>
+            { errors.category?.type === 'required' && <p>choose category</p> } */}
+
+              <Controller
+              name="category"
+              control={control}
+              rules={{required: 'true'}}
+              render={({ field }) => {
+                return <Select options={options} {...field} closeMenuOnSelect={false} components={animatedComponents} isMulti />
+              }} 
+              />
+
+            </Column>
           </Row>
           <Row>
             <ButtonSubmit disabled={!isDirty || !isValid} value='Crear' />
