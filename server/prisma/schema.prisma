@@ -16,7 +16,7 @@ enum Role {
 }
 
 model Product {
-  id           Int           @id @default(autoincrement())
+  id           Int               @id @default(autoincrement())
   name         String
   description  String
   price        Float
@@ -29,10 +29,27 @@ model Product {
   // Relations
   order_detail order_detail?
   // Products --n-n-- Category
-  category     Category[]
+  categories   ProductCategory[]
   // Una brand puede tener muchos products
   brand_id     Int
-  Brand        Brand         @relation(fields: [brand_id], references: [id])
+  Brand        Brand             @relation(fields: [brand_id], references: [id])
+}
+
+model Category {
+  id       Int               @id @default(autoincrement())
+  name     String            @unique
+  // Relations
+  // Products --n-n-- Category
+  products ProductCategory[]
+}
+
+// Tabla intermedia explicita para relacionar categorias con productos y viceversa
+model ProductCategory {
+  id         Int       @id @default(autoincrement())
+  product    Product?  @relation(fields: [productId], references: [id])
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int?
+  productId  Int?
 }
 
 model Brand {
@@ -51,27 +68,19 @@ model Province {
   address Address[]
 }
 
-model Category {
-  id      Int       @id @default(autoincrement())
-  name    String
-  // Relations
-  // Products --n-n-- Category
-  product Product[]
-}
-
 model User {
-  id           String    @id @default(uuid())
-  username     String    @unique
-  password     String
-  firstName    String?
-  lastName     String?
-  email        String
-  document     Int?
-  avatar       String?
-  role         Role      @default(client)
+  id        String    @id @default(uuid())
+  username  String    @unique
+  password  String
+  firstName String?
+  lastName  String?
+  email     String
+  document  Int?
+  avatar    String?
+  role      Role      @default(client)
   //  Relations
-  orders       Order[] //  Un cliente puede tener muchas ordenes
-  address      Address[] // Un cliente puede tener muchas direcciones
+  orders    Order[] //  Un cliente puede tener muchas ordenes
+  address   Address[] // Un cliente puede tener muchas direcciones
 }
 
 model Address {

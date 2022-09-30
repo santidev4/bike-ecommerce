@@ -16,7 +16,9 @@ const postProduct = async (req: Request, res: Response) => {
   try {
     const body = req.body
     const product = await prisma.product.create({
-      data: body
+      data: {
+        ...body
+      }
     })
     res.send(product)
   } catch (error) {

@@ -5,6 +5,7 @@ export type ProductType = {
   height: number,
   weight: number,
   stock: number,
+  brand: string,
   img: string,
   description: string,
   category: string[]

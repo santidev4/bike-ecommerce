@@ -9,6 +9,7 @@ const routes = require('./routes/index')
 const authRouter = require('./routes/auth')
 
 const server = express()
+
 dotenv.config()
 
 interface ErrorStatus extends ErrorRequestHandler {

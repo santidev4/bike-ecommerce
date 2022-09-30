@@ -7,7 +7,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { ProductType } from '../types/AdminTypes'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
-import { ReactElement } from "react"
+import { useCreateProduct } from '../api/AdminHooks'
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -20,9 +20,10 @@ function Dashboard() {
   const animatedComponents = makeAnimated()
   const { register, formState: { errors, isDirty, isValid }, handleSubmit, control } = useForm<ProductType>({ mode: 'onBlur' })
 
+  const { mutate } = useCreateProduct()
+
   const onSubmit = (data: ProductType) => {
-    console.log('data', data)
-    console.log('price', typeof(data.price))
+    mutate(data)
   }
 
   return (
@@ -37,17 +38,17 @@ function Dashboard() {
           </Column>
           <Column>
             <label htmlFor="">price</label>
-            <Input type='number' {...register('price', { required: true })} />
+            <Input type='number' {...register('price', { required: true, valueAsNumber: true })} />
           </Column>
        
 
           <Column>
             <label htmlFor="">width</label>
-            <Input type='number' {...register('width', { required: true })} />
+            <Input type='number' {...register('width', { required: true, valueAsNumber: true })} />
           </Column>
           <Column>
             <label htmlFor="">height</label>
-            <Input type='number' {...register('height', { required: true })} />
+            <Input type='number' {...register('height', { required: true, valueAsNumber: true })} />
           </Column>
         
         </Row>
@@ -56,12 +57,12 @@ function Dashboard() {
 
           <Column>
             <label htmlFor="">weight</label>
-            <Input type='number' {...register('weight', { required: true })} />
+            <Input type='number' {...register('weight', { required: true, valueAsNumber: true })} />
           </Column>
 
           <Column>
             <label htmlFor="">stock</label>
-            <Input type='number' {...register('stock', { required: true })} />
+            <Input type='number' {...register('stock', { required: true, valueAsNumber: true })} />
           </Column>
         
           <Column>
@@ -75,7 +76,16 @@ function Dashboard() {
           </Column>
         </Row>
 
+        <Row>
+          
+          <Column>
+            <label htmlFor="">brand</label>
+            <Input {...register('brand', { required: true })} />
+          </Column>
+        </Row>
+
         
+        <Row>
 
         <Column>
           <Row>
@@ -102,10 +112,14 @@ function Dashboard() {
 
             </Column>
           </Row>
+
           <Row>
             <ButtonSubmit disabled={!isDirty || !isValid} value='Crear' />
           </Row>     
+          
         </Column>
+        
+        </Row>
     
       </ProductsForm>
     </DashboardContainer>
