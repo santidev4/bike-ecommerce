@@ -5,8 +5,10 @@ const prisma = new PrismaClient()
 
 const getDbProducts = async (req: Request, res: Response) => {
   try {
-    const users = await prisma.product.findMany()
-    res.send(users)
+    const products = await prisma.product.findMany({
+      include: { category: true }
+    })
+    res.send(products)
   } catch (error) {
     console.error(error)
   }
@@ -14,11 +16,15 @@ const getDbProducts = async (req: Request, res: Response) => {
 
 const postProduct = async (req: Request, res: Response) => {
   try {
-    const body = req.body
+    const { category, ...body } = req.body
     const product = await prisma.product.create({
       data: {
-        ...body
-      }
+        ...body,
+        category: {
+          connect: category.map((e: { id: any }) => ({ id: e.id }))
+        }
+      },
+      include: { category: true }
     })
     res.send(product)
   } catch (error) {
