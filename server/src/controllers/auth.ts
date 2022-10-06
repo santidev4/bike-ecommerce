@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-expressions */
+/* eslint-disable no-undef */
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../../db'
 import jwt from 'jsonwebtoken'
-
-const prisma = new PrismaClient()
 // username, password, firstName, lastName, email, document, avatar
 
 const createUser = async (req: Request, res: Response) => {
@@ -60,7 +58,12 @@ const loginUser = async (req: Request, res: Response) => {
   }
 }
 
+const getUser = async (req: Request, res: Response) => {
+  console.log(req, 'user')
+}
+
 module.exports = {
   createUser,
-  loginUser
+  loginUser,
+  getUser
 }

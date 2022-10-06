@@ -4,11 +4,14 @@ import morgan from 'morgan'
 import dotenv from 'dotenv'
 import expressSession from 'express-session'
 import { PrismaSessionStore } from '@quixo3/prisma-session-store'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../db'
+import passport from 'passport'
+import GoogleStrategy from 'passport-google-oauth20'
+
 const routes = require('./routes/index')
 const authRouter = require('./routes/auth')
-
 const server = express()
+// const prisma = new PrismaClient()
 
 dotenv.config()
 
@@ -27,7 +30,7 @@ server.use(
     resave: false,
     saveUninitialized: false,
     store: new PrismaSessionStore(
-      new PrismaClient(),
+      prisma,
       {
         checkPeriod: 2 * 60 * 1000, // ms
         dbRecordIdIsSessionId: true,
@@ -40,7 +43,7 @@ server.use(
 server.use(express.json())
 server.use(cookieParser())
 server.use(morgan('dev'))
-server.use((req, res, next) => {
+server.use((_req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*') // 'http://localhost:3000'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
@@ -51,6 +54,22 @@ server.use((req, res, next) => {
 server.use('/', routes)
 server.use('/', authRouter)
 
+passport.use(new GoogleStrategy.Strategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: 'http://localhost:3001/oauth2/redirect/google'
+},
+async (accessToken: any, refreshToken: any, profile: any, done: (arg0: any, arg1: any) => void) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      email: profile.emails[0].value
+    }
+  })
+}
+))
+
+passport.serializeUser((user, done) => done(null, user))
+
 // Error catching endware.
 server.use((err: ErrorStatus, req: Request, res: Response, next: NextFunction) => { // eslint-disable-line no-unused-vars
   const status = err.status || 500
@@ -59,4 +78,5 @@ server.use((err: ErrorStatus, req: Request, res: Response, next: NextFunction) =
   res.status(status).send(message)
 })
 
-module.exports = server
+// module.exports = { server, prisma }
+export { server, prisma }

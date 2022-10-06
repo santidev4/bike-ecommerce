@@ -1,12 +1,10 @@
-import { PrismaClient } from '@prisma/client'
 import { Request, Response } from 'express'
-
-const prisma = new PrismaClient()
+import { prisma } from '../../db'
 
 const getDbProducts = async (req: Request, res: Response) => {
   try {
     const products = await prisma.product.findMany({
-      include: { category: true }
+      include: { categories: true }
     })
     res.send(products)
   } catch (error) {
@@ -24,7 +22,7 @@ const postProduct = async (req: Request, res: Response) => {
           connect: category.map((e: { id: any }) => ({ id: e.id }))
         }
       },
-      include: { category: true }
+      include: { categories: true }
     })
     res.send(product)
   } catch (error) {
