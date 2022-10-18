@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { SideBarContainer } from "./styles/Admin/SideBarContainer.styled"
+import { SideBarContainer } from "../styles/Admin/SideBarContainer.styled"
 
 function SideBar() {
   return (

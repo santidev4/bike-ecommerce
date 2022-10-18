@@ -1,4 +1,4 @@
-import CreateProducts from "./styles/CreateProducts"
+import CreateProducts from "./Admin/CreateProducts"
 
 function Dashboard() {
 

@@ -5,7 +5,7 @@ function Auth() {
   return (
     <>
       {/* <Login /> */}
-      <CreateAccount />
+      {/* <CreateAccount /> */}
     </>
   )
 }

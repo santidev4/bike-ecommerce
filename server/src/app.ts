@@ -60,11 +60,24 @@ passport.use(new GoogleStrategy.Strategy({
   callbackURL: 'http://localhost:3001/oauth2/redirect/google'
 },
 async (accessToken: any, refreshToken: any, profile: any, done: (arg0: any, arg1: any) => void) => {
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
-      email: profile.emails[0].value
+      username: profile.emails[0].value,
+      email: profile.emails[0].value,
+      password: profile.passport.user.id
     }
   })
+
+  if (!user) {
+    const newUser = await prisma.user.create({
+      data: {
+        username: profile.emails[0].value,
+        email: profile.emails[0].value,
+        password: profile.passport.user.id
+      }
+    })
+    done(null, newUser)
+  } else done(null, user)
 }
 ))
 

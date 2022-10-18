@@ -33,7 +33,7 @@ export const FormLogin = styled.form`
     letter-spacing: 1px;
     font-weight: 400;
     margin-top: 10px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 
     &:hover {
       color: rgba(10, 0, 0, 0.5);

@@ -5,6 +5,7 @@ import { Input } from "./styles/Auth/Input.styled"
 import { useForm } from 'react-hook-form'
 import { CreateAccountData } from '../types/authTypes'
 import { useCreateAccount } from '../api/AuthHooks/useCreateAccount'
+import { Link } from "react-router-dom"
 
 function CreateAccount() {
 
@@ -34,6 +35,7 @@ function CreateAccount() {
             <Input type='password' {...register('password', { required: true })} />
           </div>
           <ButtonSubmit value='Create' />
+          <Link to='/login'>Already have an account?</Link>
         </FormLogin>
       </AuthContainer>
     </>

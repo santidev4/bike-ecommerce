@@ -6,20 +6,34 @@ import { useForm, useFormState } from 'react-hook-form'
 import { ButtonSubmit } from "./styles/Auth/ButtonSubmit.styled"
 import { useLogin } from '../api/AuthHooks/useLogin'
 import { LoginData } from '../types/authTypes'
+import toast, { Toaster } from 'react-hot-toast'
+import { useEffect } from "react"
 
 // TODO Hacer componente para resetear password
 // TODO en error solo mostrar que los datos no son validos
 
 function Login() {
 
-  const { register, formState: { errors, isDirty, isValid }, watch, handleSubmit } = useForm<LoginData>({ mode: "onChange" })
+  const notify = () => toast('OK!')
+
+  const { register, formState, reset, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<LoginData>({ mode: "onChange" })
 
   const { mutate } = useLogin()
 
   const onSubmit = (data: LoginData) => {
     console.log('data', data)
+    notify()
     mutate(data)
+    
   }
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset({ username: '',
+              password: '' });
+    }
+  }, [formState, reset]
+  )
 
   return (
     <>
@@ -38,9 +52,11 @@ function Login() {
           </div>
           <ButtonSubmit disabled={!isDirty || !isValid} value='Log In' />
           <Link to=''>Forgot your Password?</Link>
+          <Link to='/new-account'>Create new Account</Link>
         </FormLogin>
         <p></p>
       </AuthContainer>
+      <Toaster />
     </>
   )
 }
