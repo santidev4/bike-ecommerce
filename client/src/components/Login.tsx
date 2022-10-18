@@ -18,7 +18,7 @@ function Login() {
 
   const { register, formState, reset, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<LoginData>({ mode: "onChange" })
 
-  const { mutate } = useLogin()
+  const { mutate, isLoading, isError, isSuccess } = useLogin()
 
   const onSubmit = (data: LoginData) => {
     console.log('data', data)
@@ -27,13 +27,7 @@ function Login() {
     
   }
 
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset({ username: '',
-              password: '' });
-    }
-  }, [formState, reset]
-  )
+  
 
   return (
     <>
