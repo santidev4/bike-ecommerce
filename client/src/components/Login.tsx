@@ -8,26 +8,43 @@ import { useLogin } from '../api/AuthHooks/useLogin'
 import { LoginData } from '../types/authTypes'
 import toast, { Toaster } from 'react-hot-toast'
 import { useEffect } from "react"
+import { useNavigate } from 'react-router-dom'
 
 // TODO Hacer componente para resetear password
 // TODO en error solo mostrar que los datos no son validos
 
 function Login() {
 
-  const notify = () => toast('OK!')
+  const navigate = useNavigate()
 
-  const { register, formState, reset, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<LoginData>({ mode: "onChange" })
+  const toastLoading = toast.loading('Loading...!', {id: 'load'})
 
-  const { mutate, isLoading, isError, isSuccess } = useLogin()
+  const { register, reset, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<LoginData>({ mode: "onChange" })
+
+  const { mutate, isLoading, isError, isSuccess, status } = useLogin()
 
   const onSubmit = (data: LoginData) => {
     console.log('data', data)
-    notify()
     mutate(data)
     
   }
 
-  
+  useEffect(() => {
+    if (status === 'loading')  toastLoading
+    if (isSuccess)  {
+      toast.success('Logeado', {
+        id: toastLoading
+      })
+      navigate('/')
+      
+    }
+    if (isError) {
+      toast.error('Wrong credentials', {
+        id: toastLoading
+      })
+      
+    }
+  }, [onSubmit])
 
   return (
     <>
