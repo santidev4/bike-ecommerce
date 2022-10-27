@@ -5,6 +5,10 @@ export const Utils = styled.div`
     align-items: center;
     a {
         padding: 0 10px;
+        text-decoration: none;
+        color: rgb(120, 120, 120);
+        letter-spacing: 2px;
+        font-weight: 600;
     }
 
     input {

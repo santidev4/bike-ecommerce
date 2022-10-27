@@ -44,8 +44,8 @@ const loginUser = async (req: Request, res: Response) => {
 
     // TODO agregar property isAdmin a req.session. Se cambia en node_modules-types-express-session
     // TODO metodos para autorizar admin: jwt, coockie session guardando id del user, encryptar jwt con bcrypt
-    req.session.userId = user.id
-
+    req.session.save()
+    console.log(req.session)
     // TODO guardar role en cache para optimizar
 
     const token = jwt.sign(userForToken, process.env.SECRET!, { expiresIn: '3d' })
@@ -55,6 +55,7 @@ const loginUser = async (req: Request, res: Response) => {
       admin: user.role === 'admin' // Para saber si el user es un admin
     })
   } catch (error) {
+    console.log(error)
   }
 }
 

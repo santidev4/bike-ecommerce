@@ -6,7 +6,7 @@ import expressSession from 'express-session'
 import { PrismaSessionStore } from '@quixo3/prisma-session-store'
 import { prisma } from '../db'
 import passport from 'passport'
-import GoogleStrategy from 'passport-google-oauth20'
+// import GoogleStrategy from 'passport-google-oauth20'
 
 const routes = require('./routes/index')
 const authRouter = require('./routes/auth')
@@ -23,6 +23,8 @@ interface ErrorStatus extends ErrorRequestHandler {
 server.use(
   expressSession({
     cookie: {
+      secure: true,
+      sameSite: 'none',
       maxAge: 7 * 24 * 60 * 60 * 1000 // ms
     },
     secret: process.env.SECRET!,
@@ -54,32 +56,32 @@ server.use((_req, res, next) => {
 server.use('/', routes)
 server.use('/', authRouter)
 
-passport.use(new GoogleStrategy.Strategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: 'http://localhost:3001/oauth2/redirect/google'
-},
-async (accessToken: any, refreshToken: any, profile: any, done: (arg0: any, arg1: any) => void) => {
-  const user = await prisma.user.findFirst({
-    where: {
-      username: profile.emails[0].value,
-      email: profile.emails[0].value,
-      password: profile.passport.user.id
-    }
-  })
+// passport.use(new GoogleStrategy.Strategy({
+//   clientID: process.env.GOOGLE_CLIENT_ID,
+//   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//   callbackURL: 'http://localhost:3001/oauth2/redirect/google'
+// },
+// async (accessToken: any, refreshToken: any, profile: any, done: (arg0: any, arg1: any) => void) => {
+//   const user = await prisma.user.findFirst({
+//     where: {
+//       username: profile.emails[0].value,
+//       email: profile.emails[0].value,
+//       password: profile.passport.user.id
+//     }
+//   })
 
-  if (!user) {
-    const newUser = await prisma.user.create({
-      data: {
-        username: profile.emails[0].value,
-        email: profile.emails[0].value,
-        password: profile.passport.user.id
-      }
-    })
-    done(null, newUser)
-  } else done(null, user)
-}
-))
+//   if (!user) {
+//     const newUser = await prisma.user.create({
+//       data: {
+//         username: profile.emails[0].value,
+//         email: profile.emails[0].value,
+//         password: profile.passport.user.id
+//       }
+//     })
+//     done(null, newUser)
+//   } else done(null, user)
+// }
+// ))
 
 passport.serializeUser((user, done) => done(null, user))
 

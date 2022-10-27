@@ -2,53 +2,61 @@ import { AuthContainer } from "./styles/Auth/AuthContainer.styled"
 import { Input } from "./styles/Auth/Input.styled"
 import { Link } from 'react-router-dom'
 import { FormLogin } from "./styles/Auth/FormLogin.styled"
-import { useForm, useFormState } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { ButtonSubmit } from "./styles/Auth/ButtonSubmit.styled"
 import { useLogin } from '../api/AuthHooks/useLogin'
 import { LoginData } from '../types/authTypes'
 import toast, { Toaster } from 'react-hot-toast'
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
+import { ColorRing } from "react-loader-spinner"
+import useStore from '../store/useStore'
 
 // TODO Hacer componente para resetear password
-// TODO en error solo mostrar que los datos no son validos
 
 function Login() {
 
   const navigate = useNavigate()
-
-  const toastLoading = toast.loading('Loading...!', {id: 'load'})
-
-  const { register, reset, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<LoginData>({ mode: "onChange" })
-
+  const addUsername = useStore(state => state.addUsername)
+  const { register, reset, getValues, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<LoginData>({ mode: "onChange" })
   const { mutate, isLoading, isError, isSuccess, status } = useLogin()
-
-  const onSubmit = (data: LoginData) => {
-    console.log('data', data)
-    mutate(data)
-    
-  }
+  const [ loader, setLoader ] = useState<boolean>(false)
+  const onSubmit = (data: LoginData) =>  mutate(data)
+  const values = getValues()
 
   useEffect(() => {
-    if (status === 'loading')  toastLoading
     if (isSuccess)  {
       toast.success('Logeado', {
-        id: toastLoading
+        id: 'success'
       })
-      navigate('/')
+      setLoader(true)
+      addUsername(values.username)
+      setInterval( () => { 
+        navigate('/')
+        setLoader(false)
+    }, 1500)
       
     }
     if (isError) {
-      toast.error('Wrong credentials', {
-        id: toastLoading
-      })
-      
+      setLoader(true)
+      setInterval( () => {
+        setLoader(false)
+        , 1500})
+        toast.error('Wrong credentials', {
+          id: 'error'
+        })
+        reset()
     }
-  }, [onSubmit])
+  }, [isError, isSuccess])
 
   return (
     <>
       <AuthContainer>
+
+        {
+          !loader ? 
+        
+
         <FormLogin onSubmit={handleSubmit(onSubmit)}>
           <h2>Sign In</h2>
           <div>
@@ -65,7 +73,9 @@ function Login() {
           <Link to=''>Forgot your Password?</Link>
           <Link to='/new-account'>Create new Account</Link>
         </FormLogin>
-        <p></p>
+
+        : <ColorRing />
+      }
       </AuthContainer>
       <Toaster />
     </>
