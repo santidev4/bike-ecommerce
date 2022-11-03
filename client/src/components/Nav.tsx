@@ -5,12 +5,22 @@ import { Utils } from './styles/NavStyles/Utils.styled'
 import { SearchBar } from './styles/NavStyles/SearchBar.styled'
 import { Link } from 'react-router-dom'
 import useStore from '../store/useStore'
+import { useEffect } from 'react'
 
 function Nav() {
 
     // TODO buscar el rol del user para renderizar o no la pagina admin
 
     const username = useStore(state => state.username)
+    const decodedCookie = decodeURIComponent(document.cookie)
+    const cookie = decodedCookie.slice(0, decodedCookie.indexOf('.')).slice(decodedCookie.indexOf('=') + 1)
+    // console.log('cookie', cookie)
+    // console.log(username)
+
+
+    // useEffect(() => {
+        
+    // })
 
   return (
     <>

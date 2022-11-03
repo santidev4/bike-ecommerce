@@ -30,7 +30,7 @@ function Login() {
         id: 'success'
       })
       setLoader(true)
-      addUsername(values.username)
+      addUsername(values.username)  // vuelve a quedar vacio porque se resetea el formulario
       setInterval( () => { 
         navigate('/')
         setLoader(false)
