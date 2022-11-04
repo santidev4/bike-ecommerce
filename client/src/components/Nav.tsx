@@ -1,26 +1,25 @@
-import { StyledNav }  from './styles/NavStyles/Nav.styled'
+import React, { useEffect, useState } from 'react'
+import { StyledNav } from './styles/NavStyles/Nav.styled'
 import { Logo } from './styles/NavStyles/Logo.styled'
 import { Menu } from './styles/NavStyles/Menu.styled'
 import { Utils } from './styles/NavStyles/Utils.styled'
 import { SearchBar } from './styles/NavStyles/SearchBar.styled'
 import { Link } from 'react-router-dom'
 import useStore from '../store/useStore'
-import { useEffect } from 'react'
 
-function Nav() {
+function Nav () {
+  // TODO buscar el rol del user para renderizar o no la pagina admin
 
-    // TODO buscar el rol del user para renderizar o no la pagina admin
+  const username = useStore(state => state.username)
+  const decodedCookie = decodeURIComponent(document.cookie)
+  const cookie = decodedCookie.slice(0, decodedCookie.indexOf('.')).slice(decodedCookie.indexOf('=') + 1)
+  const [userCookie, setUserCookie] = useState<string>('')
+  // console.log('cookie', cookie)
+  console.log(username)
 
-    const username = useStore(state => state.username)
-    const decodedCookie = decodeURIComponent(document.cookie)
-    const cookie = decodedCookie.slice(0, decodedCookie.indexOf('.')).slice(decodedCookie.indexOf('=') + 1)
-    // console.log('cookie', cookie)
-    // console.log(username)
-
-
-    // useEffect(() => {
-        
-    // })
+  useEffect(() => {
+    if (cookie) setUserCookie(cookie)
+  })
 
   return (
     <>
@@ -50,9 +49,8 @@ function Nav() {
                 </span>
             </a>
 
-
             <Link to='/login'>
-                
+
                 <span>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -60,7 +58,7 @@ function Nav() {
                     </svg>
                 </span>
                 {
-                    username ? username : null
+                    userCookie || null
                 }
 
             </Link>

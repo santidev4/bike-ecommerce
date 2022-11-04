@@ -47,7 +47,7 @@ function Login() {
         })
         reset()
     }
-  }, [isError, isSuccess])
+  }, [onSubmit])
 
   return (
     <>

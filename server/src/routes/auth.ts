@@ -11,7 +11,7 @@ authRouter.get('/oauth2/redirect/google', passport.authenticate('google', {
   successRedirect: '/products',
   failureFlash: '/authFailure'
 }))
-authRouter.get('/test', getUser)
+authRouter.get('/userData', getUser)
 
 module.exports = authRouter
 
