@@ -133,6 +133,6 @@ model Session {
   expiresAt DateTime
   // Relation
   // una session puede tener un user
-  user      User     @relation(fields: [userID], references: [id])
-  userID    String   @unique
+  user      User?     @relation(fields: [userID], references: [id])
+  userID    String?   @unique
 }

@@ -41,11 +41,15 @@ server.use(
     resave: false,
     saveUninitialized: true,
     store: new PrismaSessionStore(
+      // @ts-ignore
       prisma,
       {
         checkPeriod: 2 * 60 * 1000, // ms
         dbRecordIdIsSessionId: true,
         dbRecordIdFunction: undefined
+        // logger: console,
+        // loggerLevel: 'log'
+
       }
     )
   })
