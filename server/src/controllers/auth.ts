@@ -1,3 +1,4 @@
+import { CreateAccountData } from './../../../client/src/types/authTypes'
 // import { session } from 'passport';
 // import { session } from 'passport'
 /* eslint-disable no-undef */
@@ -11,7 +12,7 @@ import { prisma } from '../../db'
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const { username, password, email } = req.body
+    const { username, password, email }: CreateAccountData = req.body
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
 
@@ -45,16 +46,16 @@ const loginUser = async (req: Request, res: Response) => {
     //   username: user.username,
     //   id: user.id
     // }
-    // if (passwordCorrect) {
-    //   await prisma.session.update({
-    //     where: {
-    //       id: req.sessionID
-    //     },
-    //     data: {
-    //       userID: user.id
-    //     }
-    //   })
-    // }
+    if (passwordCorrect) {
+      await prisma.user.update({
+        where: {
+          username: body.username
+        },
+        data: {
+          sessionId: req.sessionID
+        }
+      })
+    }
     // TODO agregar property isAdmin a req.session. Se cambia en node_modules-types-express-session
     // TODO metodos para autorizar admin: jwt, coockie session guardando id del user, encryptar jwt con bcrypt
 
@@ -77,16 +78,24 @@ const loginUser = async (req: Request, res: Response) => {
 }
 
 const getUser = async (req: Request, res: Response) => {
-  console.log(req, 'user')
-  const cookie: string = req.body.cookieParser
+  console.log('req.session', req.session)
+  const id: string = req.params.id
 
-  const userData = await prisma.user.findFirst({
+  const userData = await prisma.user.findUnique({
     where: {
-      // Aca debe buscar por sessionID. De ahi lo paso a su perfil como un "detail"
-      username: cookie
+      sessionId: id
+    },
+    select: {
+      id: true,
+      username: true,
+      lastName: true,
+      firstName: true,
+      avatar: true,
+      role: true,
+      document: true
     }
   })
-
+  console.log('auth-controller', userData)
   res.send(userData)
 }
 

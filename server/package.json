@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev index.ts",
-    "tsc": "tsc",
+    "tsc": "tsc --build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

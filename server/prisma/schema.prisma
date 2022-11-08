@@ -82,7 +82,8 @@ model User {
   orders    Order[] //  Un cliente puede tener muchas ordenes
   address   Address[] // Un cliente puede tener muchas direcciones
   // session
-  sessionId Session?
+  session   Session?   @relation(fields: [sessionId], references: [sid])
+  sessionId String?    @unique
 }
 
 model Address {
@@ -133,6 +134,5 @@ model Session {
   expiresAt DateTime
   // Relation
   // una session puede tener un user
-  user      User?     @relation(fields: [userID], references: [id])
-  userID    String?   @unique
+  user      User?
 }

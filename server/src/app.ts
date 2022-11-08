@@ -38,7 +38,7 @@ server.use(
     },
     secret: process.env.SECRET!,
     // exclamation tells TypeScript that even though something looks like it could be null, it can trust you that it's not
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     store: new PrismaSessionStore(
       // @ts-ignore
