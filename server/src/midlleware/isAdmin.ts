@@ -4,8 +4,8 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
-  const userId = req.session.userId
-  const user = await prisma.user.findUnique({ where: { id: userId } })
+  const sessionId = req.session.id
+  const user = await prisma.user.findUnique({ where: { sessionId } })
 
   if (user?.role === 'admin') next()
   else res.status(401).send('unauthorized')
