@@ -1,4 +1,3 @@
-import { CreateAccountData } from './../../../client/src/types/authTypes'
 // import { session } from 'passport';
 // import { session } from 'passport'
 /* eslint-disable no-undef */
@@ -12,7 +11,7 @@ import { prisma } from '../../db'
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const { username, password, email }: CreateAccountData = req.body
+    const { username, password, email } = req.body
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
 
