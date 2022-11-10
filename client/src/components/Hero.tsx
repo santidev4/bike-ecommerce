@@ -1,12 +1,13 @@
-import { Button } from "./styles/Button.styled"
-import { ButtonContainer } from "./styles/HeroStyles/ButtonContainer.styled"
-import { HeroContainer } from "./styles/HeroStyles/HeroContainer.styled"
-import { HeroImage } from "./styles/HeroStyles/HeroImage.styled"
+import React from 'react'
+import { Button } from './styles/Button.styled'
+import { ButtonContainer } from './styles/HeroStyles/ButtonContainer.styled'
+import { HeroContainer } from './styles/HeroStyles/HeroContainer.styled'
+import { HeroImage } from './styles/HeroStyles/HeroImage.styled'
 
-function Hero() {
+function Hero () {
   return (
     <HeroContainer>
-        <HeroImage src='../../src/assets/hero-image.jpg' />
+        <HeroImage src='https://raw.githubusercontent.com/santidev4/bike-ecommerce/main/client/src/assets/hero-image.jpg' />
 
         <div>
                 <h1>Get Ready to Bike</h1>
