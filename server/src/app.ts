@@ -20,7 +20,7 @@ interface ErrorStatus extends ErrorRequestHandler {
 dotenv.config()
 server.set('trust proxy', 1)
 server.use(cors({
-  origin: process.env.ORIGIN || 'http://localhost:5173',
+  origin: process.env.ORIGIN,
   methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
   credentials: true
 }))
