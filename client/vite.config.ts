@@ -27,7 +27,7 @@ export default ({ mode }) => {
     server: {
       proxy: {
         '/server': {
-          target: process.env.BACKEND_URL,
+          target: process.env.VITE_BACKEND_URL,
           changeOrigin: true,
           secure: false,
           ws: true,
