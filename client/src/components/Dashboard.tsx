@@ -1,13 +1,10 @@
-import CreateProducts from "./Admin/CreateProducts"
+import React from 'react'
+import CreateProducts from './Admin/CreateProducts'
 
-function Dashboard() {
-
+function Dashboard () {
   return (
     <>
-
       <CreateProducts />
-      
-      
     </>
   )
 }

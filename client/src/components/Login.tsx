@@ -1,51 +1,48 @@
-import { AuthContainer } from "./styles/Auth/AuthContainer.styled"
-import { Input } from "./styles/Auth/Input.styled"
-import { Link } from 'react-router-dom'
-import { FormLogin } from "./styles/Auth/FormLogin.styled"
+import React, { useEffect, useState } from 'react'
+import { AuthContainer } from './styles/Auth/AuthContainer.styled'
+import { Input } from './styles/Auth/Input.styled'
+import { Link, useNavigate } from 'react-router-dom'
+import { FormLogin } from './styles/Auth/FormLogin.styled'
 import { useForm } from 'react-hook-form'
-import { ButtonSubmit } from "./styles/Auth/ButtonSubmit.styled"
+import { ButtonSubmit } from './styles/Auth/ButtonSubmit.styled'
 import { useLogin } from '../api/AuthHooks/useLogin'
 import { LoginData } from '../types/authTypes'
 import toast, { Toaster } from 'react-hot-toast'
-import { useEffect, useState } from "react"
-import { useNavigate } from 'react-router-dom'
-import { ColorRing } from "react-loader-spinner"
+import { ColorRing } from 'react-loader-spinner'
 import useStore from '../store/useStore'
 
 // TODO Hacer componente para resetear password
 
-function Login() {
-
+function Login () {
   const navigate = useNavigate()
   const addUsername = useStore(state => state.addUsername)
-  const { register, reset, getValues, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<LoginData>({ mode: "onChange" })
-  const { mutate, isLoading, isError, isSuccess, status } = useLogin()
-  const [ loader, setLoader ] = useState<boolean>(false)
-  const onSubmit = (data: LoginData) =>  mutate(data)
+  const { register, reset, getValues, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<LoginData>({ mode: 'onChange' })
+  const { mutate, isError, isSuccess } = useLogin()
+  const [loader, setLoader] = useState<boolean>(false)
+  const onSubmit = (data: LoginData) => mutate(data)
   const values = getValues()
 
   useEffect(() => {
-    if (isSuccess)  {
+    if (isSuccess) {
       toast.success('Logeado', {
         id: 'success'
       })
       setLoader(true)
-      addUsername(values.username)  // vuelve a quedar vacio porque se resetea el formulario
-      setInterval( () => { 
+      addUsername(values.username) // vuelve a quedar vacio porque se resetea el formulario
+      setInterval(() => {
         navigate('/')
         setLoader(false)
-    }, 1500)
-      
+      }, 1500)
     }
     if (isError) {
       setLoader(true)
-      setInterval( () => {
+      setInterval(() => {
         setLoader(false)
-        , 1500})
-        toast.error('Wrong credentials', {
-          id: 'error'
-        })
-        reset()
+      }, 1500)
+      toast.error('Wrong credentials', {
+        id: 'error'
+      })
+      reset()
     }
   }, [onSubmit])
 
@@ -54,10 +51,9 @@ function Login() {
       <AuthContainer>
 
         {
-          !loader ? 
-        
+          !loader
 
-        <FormLogin onSubmit={handleSubmit(onSubmit)}>
+            ? <FormLogin onSubmit={handleSubmit(onSubmit)}>
           <h2>Sign In</h2>
           <div>
             <label >username</label>
@@ -74,7 +70,7 @@ function Login() {
           <Link to='/new-account'>Create new Account</Link>
         </FormLogin>
 
-        : <ColorRing />
+            : <ColorRing />
       }
       </AuthContainer>
       <Toaster />

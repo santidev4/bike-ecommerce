@@ -1,5 +1,6 @@
+import React from 'react'
 
-function Contact() {
+function Contact () {
   return (
     <div>Contact</div>
   )

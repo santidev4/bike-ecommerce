@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { StyledNav } from './styles/NavStyles/Nav.styled'
 import { Logo } from './styles/NavStyles/Logo.styled'
 import { Menu } from './styles/NavStyles/Menu.styled'
@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import useStore from '../store/useStore'
 import { useGetUserData } from '../api/AuthHooks/useGetUserData'
 
-function Nav() {
+function Nav () {
   // TODO buscar el rol del user para renderizar o no la pagina admin
 
   const addUserName = useStore(state => state.addUsername)
@@ -21,10 +21,10 @@ function Nav() {
   useEffect(() => {
     if (data) addUserName(username)
   }, [])
-  
+
   console.log('username', username)
   console.log('data', data)
-    
+
   return (
     <>
       <StyledNav>

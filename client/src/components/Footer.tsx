@@ -1,19 +1,20 @@
-import { FooterMainContainer } from "./styles/FooterStyles/FooterMAinContainer"
+import React from 'react'
+import { FooterMainContainer } from './styles/FooterStyles/FooterMAinContainer'
 import { SocialIcon } from 'react-social-icons'
 
-function Footer() {
+function Footer () {
   return (
     <FooterMainContainer>
       <div>
 
-      <SocialIcon 
+      <SocialIcon
         url="https://www.instagram.com"
         bgColor="#fff"
         />
       </div>
-      
+
       <div>
-        <SocialIcon 
+        <SocialIcon
           url="https://www.facebook.com"
           bgColor="#fff"
         />

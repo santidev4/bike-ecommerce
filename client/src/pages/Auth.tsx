@@ -1,11 +1,12 @@
-import CreateAccount from "../components/CreateAccount"
-import Login from "../components/Login"
+import React from 'react'
+import CreateAccount from '../components/CreateAccount'
+import Login from '../components/Login'
 
-function Auth() {
+function Auth () {
   return (
     <>
-      {/* <Login /> */}
-      {/* <CreateAccount /> */}
+      <Login />
+      <CreateAccount />
     </>
   )
 }

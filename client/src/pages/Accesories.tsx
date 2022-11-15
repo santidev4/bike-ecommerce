@@ -1,5 +1,6 @@
+import React from 'react'
 
-function Accesories() {
+function Accesories () {
   return (
     <div>Accesories</div>
   )

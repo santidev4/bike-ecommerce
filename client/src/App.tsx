@@ -1,3 +1,4 @@
+import React from 'react'
 import Footer from './components/Footer'
 import Nav from './components/Nav'
 import Home from './pages/Home'
@@ -11,7 +12,7 @@ import Admin from './pages/Admin'
 import CreateAccount from './components/CreateAccount'
 import Login from './components/Login'
 
-function App() {
+function App () {
   return (
     <>
       <BrowserRouter>
@@ -27,7 +28,6 @@ function App() {
 
             <Route path='/new-account' element={ <CreateAccount /> } />
             <Route path='/login' element={ <Login /> } />
-          
           </Routes>
         <Footer />
       </BrowserRouter>
