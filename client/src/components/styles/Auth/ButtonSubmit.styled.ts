@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
-export const ButtonSubmit = styled.input.attrs(props=> ({
+export const ButtonSubmit = styled.input.attrs(props => ({
   type: 'submit',
   value: props.value
-  }
+}
 ))`
-    background-color: ${({theme}) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.primary};
     color: rgb(40, 40, 40);
     border-radius: 10px;
     width: 300px;
@@ -19,7 +19,7 @@ export const ButtonSubmit = styled.input.attrs(props=> ({
 
     &:hover {
         cursor: pointer;
-        background-color: ${({theme}) => theme.colors.secondary};
+        background-color: ${({ theme }) => theme.colors.secondary};
         color: white;
         transition: all 0.3s;
     }

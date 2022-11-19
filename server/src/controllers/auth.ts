@@ -55,6 +55,7 @@ const loginUser = async (req: Request, res: Response) => {
         }
       })
     }
+
     // TODO agregar property isAdmin a req.session. Se cambia en node_modules-types-express-session
     // TODO metodos para autorizar admin: jwt, coockie session guardando id del user, encryptar jwt con bcrypt
 
@@ -98,8 +99,23 @@ const getUser = async (req: Request, res: Response) => {
   res.send(userData)
 }
 
+const logout = async (req: Request, res: Response) => {
+  if (req.session) {
+    req.session.destroy(err => {
+      if (err) {
+        res.status(400).send('Unable to log out')
+      } else {
+        res.send('Logout successful')
+      }
+    })
+  } else {
+    res.end()
+  }
+}
+
 module.exports = {
   createUser,
   loginUser,
-  getUser
+  getUser,
+  logout
 }

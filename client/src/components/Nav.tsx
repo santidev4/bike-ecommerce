@@ -4,6 +4,7 @@ import { Logo } from './styles/NavStyles/Logo.styled'
 import { Menu } from './styles/NavStyles/Menu.styled'
 import { Utils } from './styles/NavStyles/Utils.styled'
 import { SearchBar } from './styles/NavStyles/SearchBar.styled'
+import { LogoutBtn } from './styles/NavStyles/LogoutBtn.styled'
 import { Link } from 'react-router-dom'
 import useStore from '../store/useStore'
 import { useGetUserData } from '../api/AuthHooks/useGetUserData'
@@ -64,7 +65,7 @@ function Nav () {
               </svg>
             </span>
             {
-              data?.username || null
+              data?.username ? <LogoutBtn /> : null
             }
 
           </Link>

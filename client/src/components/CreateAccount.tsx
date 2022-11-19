@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { AuthContainer } from './styles/Auth/AuthContainer.styled'
 import { ButtonSubmit } from './styles/Auth/ButtonSubmit.styled'
 import { FormLogin } from './styles/Auth/FormLogin.styled'
@@ -6,21 +7,49 @@ import { Input } from './styles/Auth/Input.styled'
 import { useForm } from 'react-hook-form'
 import { CreateAccountData } from '../types/authTypes'
 import { useCreateAccount } from '../api/AuthHooks/useCreateAccount'
-import { Link } from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast'
+import { ColorRing } from 'react-loader-spinner'
 
 function CreateAccount () {
-  const { register, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<CreateAccountData>({ mode: 'onChange' })
-
-  const { mutate } = useCreateAccount()
+  const navigate = useNavigate()
+  const { register, reset, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<CreateAccountData>({ mode: 'onChange' })
+  const [loader, setLoader] = useState<boolean>(false)
+  const { mutate, isError, isSuccess } = useCreateAccount()
 
   const onSubmit = (data: CreateAccountData) => {
     mutate(data)
   }
 
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Account created succesfully', {
+        id: 'newAccountSucces'
+      })
+      setLoader(true)
+      setInterval(() => {
+        navigate('/')
+        setLoader(false)
+      }, 1500)
+    }
+    if (isError) {
+      setLoader(true)
+      setInterval(() => {
+        setLoader(false)
+        reset()
+      }, 1500)
+      toast.error('Failed to create New Account', {
+        id: 'newAccountFail'
+      })
+    }
+  })
+
   return (
     <>
       <AuthContainer>
-        <FormLogin onSubmit={handleSubmit(onSubmit)}>
+{
+        !loader
+
+          ? <FormLogin onSubmit={handleSubmit(onSubmit)}>
           <h2>Create Account</h2>
           <div>
             <label>username</label>
@@ -39,7 +68,10 @@ function CreateAccount () {
           <ButtonSubmit disabled={!isDirty || !isValid} value='Create' />
           <Link to='/login'>Already have an account?</Link>
         </FormLogin>
+
+          : <ColorRing />}
       </AuthContainer>
+      <Toaster />
     </>
   )
 }
