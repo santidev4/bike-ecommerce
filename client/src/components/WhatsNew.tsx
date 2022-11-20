@@ -56,7 +56,7 @@ function WhatsNew () {
     <MainSectionContainer>
 
       <SectionTitle>
-        <h2>What&aposs NEW</h2>
+        <h2>What is NEW</h2>
       </SectionTitle>
       <Swiper
       modules={[Navigation, Pagination]}

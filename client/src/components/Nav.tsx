@@ -4,10 +4,10 @@ import { Logo } from './styles/NavStyles/Logo.styled'
 import { Menu } from './styles/NavStyles/Menu.styled'
 import { Utils } from './styles/NavStyles/Utils.styled'
 import { SearchBar } from './styles/NavStyles/SearchBar.styled'
-import { LogoutBtn } from './styles/NavStyles/LogoutBtn.styled'
 import { Link } from 'react-router-dom'
 import useStore from '../store/useStore'
 import { useGetUserData } from '../api/AuthHooks/useGetUserData'
+import ProfileBtn from './ProfileBtn'
 
 function Nav () {
   // TODO buscar el rol del user para renderizar o no la pagina admin
@@ -25,6 +25,7 @@ function Nav () {
 
   console.log('username', username)
   console.log('data', data)
+  console.log('cookie', cookie)
 
   return (
     <>
@@ -65,7 +66,7 @@ function Nav () {
               </svg>
             </span>
             {
-              data?.username ? <LogoutBtn /> : null
+              data?.username ? <ProfileBtn /> : null
             }
 
           </Link>
