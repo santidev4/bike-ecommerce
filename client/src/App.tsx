@@ -11,6 +11,7 @@ import Accesories from './pages/Accesories'
 import Admin from './pages/Admin'
 import CreateAccount from './components/CreateAccount'
 import Login from './components/Login'
+import Profile from './pages/Profile'
 
 function App () {
   return (
@@ -28,6 +29,8 @@ function App () {
 
             <Route path='/new-account' element={ <CreateAccount /> } />
             <Route path='/login' element={ <Login /> } />
+
+            <Route path='/profile/:id' element={ <Profile /> } />
           </Routes>
         <Footer />
       </BrowserRouter>
