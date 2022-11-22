@@ -81,7 +81,7 @@ const getUser = async (req: Request, res: Response) => {
   console.log('req.session', req.session)
   const id: string = req.params.id
 
-  const userData = await prisma.user.findUnique({
+  const userData = await prisma.user.findFirst({
     where: {
       sessionId: id
     },

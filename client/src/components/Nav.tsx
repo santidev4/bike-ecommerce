@@ -7,7 +7,6 @@ import { SearchBar } from './styles/NavStyles/SearchBar.styled'
 import { Link } from 'react-router-dom'
 import useStore from '../store/useStore'
 import { useGetUserData } from '../api/AuthHooks/useGetUserData'
-import ProfileBtn from './ProfileBtn'
 
 function Nav () {
   // TODO buscar el rol del user para renderizar o no la pagina admin
@@ -66,7 +65,7 @@ function Nav () {
               </svg>
             </span>
             {
-              data?.username ? <ProfileBtn /> : null
+              data?.username ? data?.username : null
             }
 
           </Link>
