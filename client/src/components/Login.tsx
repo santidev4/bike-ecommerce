@@ -9,18 +9,15 @@ import { useLogin } from '../api/AuthHooks/useLogin'
 import { LoginData } from '../types/authTypes'
 import toast, { Toaster } from 'react-hot-toast'
 import { ColorRing } from 'react-loader-spinner'
-import useStore from '../store/useStore'
 
 // TODO Hacer componente para resetear password
 
 function Login () {
   const navigate = useNavigate()
-  const addUsername = useStore(state => state.addUsername)
-  const { register, reset, getValues, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<LoginData>({ mode: 'onChange' })
+  const { register, reset, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<LoginData>({ mode: 'onChange' })
   const { mutate, isError, isSuccess } = useLogin()
   const [loader, setLoader] = useState<boolean>(false)
   const onSubmit = (data: LoginData) => mutate(data)
-  const values = getValues()
 
   useEffect(() => {
     if (isSuccess) {
@@ -28,7 +25,6 @@ function Login () {
         id: 'success'
       })
       setLoader(true)
-      addUsername(values.username) // vuelve a quedar vacio porque se resetea el formulario
       setInterval(() => {
         navigate('/')
         setLoader(false)

@@ -92,7 +92,8 @@ const getUser = async (req: Request, res: Response) => {
       firstName: true,
       avatar: true,
       role: true,
-      document: true
+      document: true,
+      email: true
     }
   })
   console.log('auth-controller', userData)

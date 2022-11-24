@@ -11,20 +11,15 @@ import { useGetUserData } from '../api/AuthHooks/useGetUserData'
 function Nav () {
   // TODO buscar el rol del user para renderizar o no la pagina admin
 
-  const addUserName = useStore(state => state.addUsername)
-  const username = useStore(state => state.username)
+  const setProfileData = useStore((state) => state.setProfileData)
   const decodedCookie = decodeURIComponent(document.cookie)
   const cookie = decodedCookie.slice(0, decodedCookie.indexOf('.')).slice(decodedCookie.indexOf(':') + 1)
 
   const { data } = useGetUserData(cookie)
 
   useEffect(() => {
-    if (data) addUserName(username)
-  }, [])
-
-  console.log('username', username)
-  console.log('data', data)
-  console.log('cookie', cookie)
+    if (data) setProfileData(data)
+  }, [data])
 
   return (
     <>
@@ -55,8 +50,8 @@ function Nav () {
               </svg>
             </span>
           </a>
-
-          <Link to={cookie ? `/profile/${data?.id}` : '/login'}>
+          {/* `/profile/${data?.id}` */}
+          <Link to={data ? `/profile/${data?.id}` : '/login'}>
 
             <span>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

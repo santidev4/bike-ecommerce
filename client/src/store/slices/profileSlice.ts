@@ -8,20 +8,19 @@ export interface Profile {
   document: number | undefined,
   avatar: string | undefined,
   address: [],
-  addUsername: (payload: Profile['username']) => void
+  setProfileData: (payload: Profile) => void
 }
 
- export const profile: StateCreator<Profile> = (set) => ({
+export const profile: StateCreator<Profile> = (set) => ({
   username: '',
   email: '',
-  firstName: undefined,
-  lastName: undefined,
+  firstName: '',
+  lastName: '',
   document: undefined,
   avatar: undefined,
   address: [],
-  addUsername: (payload: Profile['username']) => set((state) => ({
+  setProfileData: (payload: Profile) => set((state) => ({
     ...state,
-    username: payload
+    ...payload
   }))
 })
-
