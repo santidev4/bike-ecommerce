@@ -1,30 +1,40 @@
-import { DashboardContainer } from "../styles/Admin/DashboardContainer.styled"
-import { DescriptionProduct } from "../styles/Admin/DescriptionProduct.styled"
-import { ProductsForm, Row, Column } from "../styles/Admin/ProductsForm.styled"
-import { ButtonSubmit } from "../styles/Auth/ButtonSubmit.styled"
-import { Input } from "../styles/Auth/Input.styled"
+import React from 'react'
+import { DashboardContainer } from '../styles/Admin/DashboardContainer.styled'
+import { DescriptionProduct } from '../styles/Admin/DescriptionProduct.styled'
+import { ProductsForm, Row, Column } from '../styles/Admin/ProductsForm.styled'
+import { ButtonSubmit } from '../styles/Auth/ButtonSubmit.styled'
+import { Input } from '../styles/Auth/Input.styled'
 import { useForm, Controller } from 'react-hook-form'
 import { ProductType } from '../../types/AdminTypes'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
-import { useCreateProduct } from '../../api/AdminHooks'
+import { useCreateProduct, useGetCategories, useGetBrands } from '../../api/AdminHooks'
 
-const options = [
-  { value: 'bicicletas', label: 'bicicletas' },
-  { value: 'accesorios', label: 'accesorios' },
-  { value: 'accesorios', label: 'accesorios' }
-]
-
-function CreateProducts() {
-
+function CreateProducts () {
   const animatedComponents = makeAnimated()
   const { register, formState: { errors, isDirty, isValid }, handleSubmit, control } = useForm<ProductType>({ mode: 'onBlur' })
 
+  const { data: categories } = useGetCategories()
+  const { data: brands } = useGetBrands()
   const { mutate } = useCreateProduct()
 
   const onSubmit = (data: ProductType) => {
     mutate(data)
   }
+
+  const categoryOptions = categories?.map((e: { name: string }) => {
+    return {
+      value: e.name,
+      label: e.name
+    }
+  })
+
+  const brandOptions = brands?.map((e: { name: string }) => {
+    return {
+      value: e.name,
+      label: e.name
+    }
+  })
 
   return (
     <DashboardContainer>
@@ -41,7 +51,6 @@ function CreateProducts() {
             <label htmlFor="">price</label>
             <Input type='number' {...register('price', { required: true, valueAsNumber: true })} />
           </Column>
-       
 
           <Column>
             <label htmlFor="">width</label>
@@ -51,7 +60,7 @@ function CreateProducts() {
             <label htmlFor="">height</label>
             <Input type='number' {...register('height', { required: true, valueAsNumber: true })} />
           </Column>
-        
+
         </Row>
 
         <Row>
@@ -65,7 +74,7 @@ function CreateProducts() {
             <label htmlFor="">stock</label>
             <Input type='number' {...register('stock', { required: true, valueAsNumber: true })} />
           </Column>
-        
+
           <Column>
             <label htmlFor="">img</label>
             <Input type='text' {...register('img', { required: true })} />
@@ -78,50 +87,56 @@ function CreateProducts() {
         </Row>
 
         <Row>
-          
-          <Column>
+
+          {/* <Column>
             <label htmlFor="">brand</label>
             <Input {...register('brand', { required: true })} />
+          </Column> */}
+
+          <Column>
+            <label htmlFor="">length</label>
+            <Input {...register('length', { required: true })} />
           </Column>
         </Row>
 
-        
         <Row>
 
         <Column>
           <Row>
             <Column>
-            {/* <label htmlFor="">categories</label>
-            <Select 
-              // defaultValue={{ label: 'Choose category', value: 'empty' }}
-              options={options}
-              closeMenuOnSelect={false}
-              components={animatedComponents}
-              isMulti
-              />
-
-            { errors.category?.type === 'required' && <p>choose category</p> } */}
 
               <Controller
-              name="category"
+              name="categories"
               control={control}
-              rules={{required: 'true'}}
+              rules={{ required: 'true' }}
               render={({ field }) => {
-                return <Select options={options} {...field} closeMenuOnSelect={false} components={animatedComponents} isMulti />
-              }} 
+                return <Select options={categoryOptions} {...field} closeMenuOnSelect={false} components={animatedComponents} isMulti />
+              }}
               />
-              { errors.category?.type === 'required' && <p>choose category</p> }
+              { errors.categories?.type === 'required' && <p>choose category</p> }
+            </Column>
+            <Column>
+
+              <Controller
+              name="brand"
+              control={control}
+              rules={{ required: 'true' }}
+              render={({ field }) => {
+                return <Select options={brandOptions} {...field} closeMenuOnSelect={false} components={animatedComponents} isMulti />
+              }}
+              />
+              { errors.brand?.type === 'required' && <span>choose brand</span> }
             </Column>
           </Row>
 
           <Row>
             <ButtonSubmit disabled={!isDirty || !isValid} value='Crear' />
-          </Row>     
-          
+          </Row>
+
         </Column>
-        
+
         </Row>
-    
+
       </ProductsForm>
     </DashboardContainer>
   )

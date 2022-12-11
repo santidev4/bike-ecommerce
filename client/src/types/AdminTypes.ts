@@ -5,8 +5,17 @@ export type ProductType = {
   height: number,
   weight: number,
   stock: number,
+  length: number,
   brand: string,
   img: string,
   description: string,
-  category: string[]
+  categories: string[]
+}
+
+export type CategoryType = {
+  name: string
+}
+
+export type BrandType = {
+  name: string
 }

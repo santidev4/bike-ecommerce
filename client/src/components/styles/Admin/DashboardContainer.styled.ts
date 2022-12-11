@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const DashboardContainer = styled.div`
-  width: 80%;
-  height: 200px;
+  margin-top: 50px;
+  /* width: 80%; */
+  /* height: 200px; */
 `

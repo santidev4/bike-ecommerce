@@ -33,7 +33,7 @@ model Product {
   categories   ProductCategory[]
   // Una brand puede tener muchos products
   brand_id     Int
-  Brand        Brand             @relation(fields: [brand_id], references: [id])
+  brand        Brand             @relation(fields: [brand_id], references: [id])
 }
 
 model Category {

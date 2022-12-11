@@ -11,11 +11,6 @@ export const ProductsForm = styled.form`
   border-radius: 10px;
   flex-direction: row;
 
-  div {
-        /* display: flex; 
-        flex-direction: column; */
-  }
-
   label {
     align-self: center;
     font-weight: 500;
