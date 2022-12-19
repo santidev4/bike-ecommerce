@@ -83,7 +83,7 @@ model User {
   orders    Order[] //  Un cliente puede tener muchas ordenes
   address   Address[] // Un cliente puede tener muchas direcciones
   // session
-  session   Session?   @relation(fields: [sessionId], references: [sid])
+  session   Session?   @relation(fields: [sessionId], references: [sid], onUpdate: Cascade)
   sessionId String?    @unique
 }
 

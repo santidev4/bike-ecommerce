@@ -22,19 +22,22 @@ function CreateProducts () {
     mutate(data)
   }
 
-  const categoryOptions = categories?.map((e: { name: string }) => {
+  const categoryOptions = categories?.map((e: { name: string, id: number }) => {
     return {
-      value: e.name,
+      value: e.id,
       label: e.name
     }
   })
 
-  const brandOptions = brands?.map((e: { name: string }) => {
+  const brandOptions = brands?.map((e: { name: string, id: number }) => {
     return {
-      value: e.name,
+      value: e.id,
       label: e.name
     }
   })
+
+  console.log('categoryOptions', categoryOptions)
+  console.log('brandOptions', brandOptions)
 
   return (
     <DashboardContainer>
@@ -82,20 +85,15 @@ function CreateProducts () {
 
           <Column>
             <label htmlFor="">description</label>
-            <DescriptionProduct {...register('description', { required: true })} />
+            <DescriptionProduct {...register('description', { required: true, valueAsNumber: true })} />
           </Column>
         </Row>
 
         <Row>
 
-          {/* <Column>
-            <label htmlFor="">brand</label>
-            <Input {...register('brand', { required: true })} />
-          </Column> */}
-
           <Column>
             <label htmlFor="">length</label>
-            <Input {...register('length', { required: true })} />
+            <Input type='number' {...register('length', { required: true })} />
           </Column>
         </Row>
 
@@ -118,14 +116,14 @@ function CreateProducts () {
             <Column>
 
               <Controller
-              name="brand"
+              name="brand_id"
               control={control}
               rules={{ required: 'true' }}
               render={({ field }) => {
                 return <Select options={brandOptions} {...field} closeMenuOnSelect={false} components={animatedComponents} isMulti />
               }}
               />
-              { errors.brand?.type === 'required' && <span>choose brand</span> }
+              { errors.brand_id?.type === 'required' && <span>choose brand</span> }
             </Column>
           </Row>
 

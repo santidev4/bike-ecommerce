@@ -1,5 +1,4 @@
-// import { session } from 'passport';
-// import { session } from 'passport'
+
 /* eslint-disable no-undef */
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
@@ -31,7 +30,6 @@ const createUser = async (req: Request, res: Response) => {
 const loginUser = async (req: Request, res: Response) => {
   try {
     const body = req.body
-
     const user = await prisma.user.findFirst({
       where: { username: body.username }
     })
@@ -45,16 +43,16 @@ const loginUser = async (req: Request, res: Response) => {
     //   username: user.username,
     //   id: user.id
     // }
-    if (passwordCorrect) {
-      await prisma.user.update({
-        where: {
-          username: body.username
-        },
-        data: {
-          sessionId: req.sessionID
-        }
-      })
-    }
+    // if (passwordCorrect) {
+    //   await prisma.user.update({
+    //     where: {
+    //       username: body.username
+    //     },
+    //     data: {
+    //       sessionId: req.sessionID
+    //     }
+    //   })
+    // }
 
     // TODO agregar property isAdmin a req.session. Se cambia en node_modules-types-express-session
     // TODO metodos para autorizar admin: jwt, coockie session guardando id del user, encryptar jwt con bcrypt

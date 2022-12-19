@@ -1,3 +1,7 @@
+export interface CategoryType {
+  name: string
+}
+
 export type ProductType = {
   name: string
   price: number,
@@ -6,14 +10,10 @@ export type ProductType = {
   weight: number,
   stock: number,
   length: number,
-  brand: string,
+  brand_id: number,
   img: string,
   description: string,
-  categories: string[]
-}
-
-export type CategoryType = {
-  name: string
+  categories: CategoryType[]
 }
 
 export type BrandType = {

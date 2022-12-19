@@ -18,8 +18,8 @@ const postProduct = async (req: Request, res: Response) => {
     const product = await prisma.product.create({
       data: {
         ...body,
-        category: {
-          connect: categories.map((e: { id: any }) => ({ id: e.id }))
+        categories: {
+          connect: categories.map((e: { id: number }) => ({ id: e.id }))
         }
       },
       include: { categories: true }
