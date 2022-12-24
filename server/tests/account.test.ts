@@ -17,6 +17,13 @@ const category = {
   name: 'bikes'
 }
 
+beforeAll(async () => {
+  await app.post('/login')
+    .withCredentials(true)
+    .send(loginData)
+    .expect(200)
+})
+
 describe('user account auth', () => {
   // it('should create a new account', async () => {
   //   await app.post('/register')
@@ -25,12 +32,6 @@ describe('user account auth', () => {
   //     .expect(200)
   // })
 
-  it('should login', async () => {
-    await app.post('/login')
-      .withCredentials(true)
-      .send(loginData)
-      .expect(200)
-  })
 })
 
 describe('admin funtionality', () => {
