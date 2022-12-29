@@ -14,5 +14,6 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
         position: relative;
         background-color: hsla(120, 99%, 99%, 0.8);
+        margin-bottom: 170px;
     } 
 `

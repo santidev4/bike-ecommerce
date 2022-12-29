@@ -38,15 +38,19 @@ const loginUser = async (req: Request, res: Response) => {
       : await bcrypt.compare(body.password, user.password)
 
     if (!(user && passwordCorrect)) return res.status(401).json({ error: 'invalid username or password' })
+    console.log('req.sessionID en login', req.sessionID)
 
     // const userForToken = {
     //   username: user.username,
     //   id: user.id
     // }
+    req.session.save((err) => console.log(err))
+    res.header('Content-Type', 'application/json')
+    console.log(req.session)
     if (passwordCorrect) {
       await prisma.user.update({
         where: {
-          username: body.username
+          id: user.id
         },
         data: {
           sessionId: req.sessionID
@@ -60,9 +64,6 @@ const loginUser = async (req: Request, res: Response) => {
     // TODO guardar role en cache para optimizar
 
     // const token = jwt.sign(userForToken, process.env.SECRET!, { expiresIn: '3d' })
-    req.session.save((err) => console.log(err))
-    res.header('Content-Type', 'application/json')
-    console.log(req.session)
     res.send(req.session)
 
     // res.status(200).send({

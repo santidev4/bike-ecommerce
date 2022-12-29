@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
-  const sessionId = req.session.id
+  const sessionId = req.sessionID
   const user = await prisma.user.findFirst({
     where: { sessionId }
   })

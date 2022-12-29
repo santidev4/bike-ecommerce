@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Button = styled.button`
-    background-color: ${({theme}) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.primary};
     color: rgb(40, 40, 40);
     border-radius: 10px;
     width: 300px;
@@ -15,7 +15,7 @@ export const Button = styled.button`
 
     &:hover {
         cursor: pointer;
-        background-color: ${({theme}) => theme.colors.secondary};
+        background-color: ${({ theme }) => theme.colors.secondary};
         color: white;
         transition: all 0.3s;
     }
