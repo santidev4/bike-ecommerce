@@ -30,6 +30,19 @@ const postProduct = async (req: Request, res: Response) => {
   }
 }
 
+const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.body
+    await prisma.product.delete({
+      where: {
+        id
+      }
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const postCategory = async (req: Request, res: Response) => {
   try {
     const body = req.body
@@ -46,6 +59,20 @@ const getCategories = async (req: Request, res: Response) => {
   try {
     const categories = await prisma.category.findMany()
     res.send(categories)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const deleteCategory = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.body
+    const category = await prisma.category.delete({
+      where: {
+        id
+      }
+    })
+    res.send(category)
   } catch (error) {
     console.error(error)
   }
@@ -72,11 +99,28 @@ const getBrands = async (req: Request, res: Response) => {
   }
 }
 
+const deleteBrand = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.body
+    const brand = await prisma.brand.delete({
+      where: {
+        id
+      }
+    })
+    res.send(brand)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 module.exports = {
   getDbProducts,
   postProduct,
+  deleteProduct,
   postCategory,
   getCategories,
+  deleteCategory,
   postBrand,
-  getBrands
+  getBrands,
+  deleteBrand
 }

@@ -20,6 +20,7 @@ function CreateProducts () {
 
   const onSubmit = (data: ProductType) => {
     mutate(data)
+    console.log('product data', data)
   }
 
   const categoryOptions = categories?.map((e: { name: string, id: number }) => {
@@ -85,7 +86,7 @@ function CreateProducts () {
 
           <Column>
             <label htmlFor="">description</label>
-            <DescriptionProduct {...register('description', { required: true, valueAsNumber: true })} />
+            <DescriptionProduct {...register('description', { required: true })} />
           </Column>
         </Row>
 
