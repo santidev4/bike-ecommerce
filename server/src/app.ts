@@ -38,7 +38,7 @@ server.use(
     },
     secret: process.env.SECRET!,
     // exclamation tells TypeScript that even though something looks like it could be null, it can trust you that it's not
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     store: new PrismaSessionStore(
       // @ts-ignore
@@ -69,33 +69,6 @@ server.use(express.urlencoded({ extended: false }))
 
 server.use('/', routes)
 server.use('/', authRouter)
-
-// passport.use(new GoogleStrategy.Strategy({
-//   clientID: process.env.GOOGLE_CLIENT_ID,
-//   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//   callbackURL: 'http://localhost:3001/oauth2/redirect/google'
-// },
-// async (accessToken: any, refreshToken: any, profile: any, done: (arg0: any, arg1: any) => void) => {
-//   const user = await prisma.user.findFirst({
-//     where: {
-//       username: profile.emails[0].value,
-//       email: profile.emails[0].value,
-//       password: profile.passport.user.id
-//     }
-//   })
-
-//   if (!user) {
-//     const newUser = await prisma.user.create({
-//       data: {
-//         username: profile.emails[0].value,
-//         email: profile.emails[0].value,
-//         password: profile.passport.user.id
-//       }
-//     })
-//     done(null, newUser)
-//   } else done(null, user)
-// }
-// ))
 
 // Error catching endware.
 server.use((err: ErrorStatus, req: Request, res: Response, next: NextFunction) => { // eslint-disable-line no-unused-vars

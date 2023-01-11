@@ -44,19 +44,21 @@ const loginUser = async (req: Request, res: Response) => {
     //   username: user.username,
     //   id: user.id
     // }
-    req.session.save((err) => console.log(err))
+    req.session.save()
     res.header('Content-Type', 'application/json')
-    console.log(req.session)
-    if (passwordCorrect) {
-      await prisma.user.update({
-        where: {
-          id: user.id
-        },
-        data: {
-          sessionId: req.sessionID
-        }
-      })
-    }
+    console.log('userId', req.session.userId)
+    console.log('session', req.session)
+    console.log('user', user)
+    // if (passwordCorrect) {
+    //   await prisma.user.update({
+    //     where: {
+    //       id: user.id
+    //     },
+    //     data: {
+    //       sessionId: req.sessionID
+    //     }
+    //   })
+    // }
 
     // TODO agregar property isAdmin a req.session. Se cambia en node_modules-types-express-session
     // TODO metodos para autorizar admin: jwt, coockie session guardando id del user, encryptar jwt con bcrypt

@@ -14,7 +14,7 @@ const loginData = {
 // }
 
 const category = {
-  name: 'bikes'
+  name: 'testing'
 }
 
 beforeAll(async () => {
