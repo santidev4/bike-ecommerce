@@ -18,10 +18,10 @@ const postProduct = async (req: Request, res: Response) => {
     const product = await prisma.product.create({
       data: {
         ...body,
-        ProductCategory: {
+        categories: {
           connect: categories.map((e: { id: number }) => ({ id: e.id }))
         },
-        Brand: {
+        brand: {
           connect: brand.map((e: { id: number }) => ({ id: e.id }))
         }
       },
@@ -72,10 +72,10 @@ const getCategories = async (req: Request, res: Response) => {
 
 const deleteCategory = async (req: Request, res: Response) => {
   try {
-    const { id } = req.body
+    const { name } = req.body
     const category = await prisma.category.delete({
       where: {
-        id
+        name
       }
     })
     res.send(category)
