@@ -14,20 +14,29 @@ const getDbProducts = async (req: Request, res: Response) => {
 
 const postProduct = async (req: Request, res: Response) => {
   try {
-    const { categories, brand, ...body } = req.body
+    const body = req.body
     const product = await prisma.product.create({
       data: {
         ...body,
         categories: {
-          connect: categories.map((e: { id: number }) => ({ id: e.id }))
+          connect: [{
+            id: 4
+          }]
         },
         brand: {
-          connect: brand.map((e: { id: number }) => ({ id: e.id }))
+          connectOrCreate: {
+            create: {
+              name: 'GT'
+            },
+            where: {
+              name: 'GT'
+            }
+          }
         }
+
       },
       include: {
-        categories: true,
-        Brand: true
+        categories: true
       }
     })
     res.send(product)

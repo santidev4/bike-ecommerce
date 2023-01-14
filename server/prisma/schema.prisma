@@ -30,7 +30,7 @@ model Product {
   // Relations
   order_detail order_detail?
   // Products --n-n-- Category
-  categories   ProductCategory[]
+  categories   Category[]
   // Una brand puede tener muchos products
   brand_id     Int
   brand        Brand            @relation(fields: [brand_id], references: [id])
@@ -41,17 +41,17 @@ model Category {
   name     String            @unique
   // Relations
   // Products --n-n-- Category
-  products ProductCategory[]
+  products Product[]
 }
 
 // Tabla intermedia explicita para relacionar categorias con productos y viceversa
-model ProductCategory {
-  id         Int       @id @default(autoincrement())
-  product    Product?  @relation(fields: [productId], references: [id])
-  category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId Int?
-  productId  Int?
-}
+// model ProductCategory {
+//   id         Int       @id @default(autoincrement())
+//   product    Product?  @relation(fields: [productId], references: [id])
+//   category   Category? @relation(fields: [categoryId], references: [id])
+//   categoryId Int?
+//   productId  Int?
+// }
 
 model Brand {
   id       Int       @id @default(autoincrement())

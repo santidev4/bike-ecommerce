@@ -41,5 +41,5 @@ describe('admin funtionality', () => {
 })
 
 afterAll(async () => {
-  deleteNewcategory(newCategory.name)
+  deleteNewcategory(newCategory)
 })
