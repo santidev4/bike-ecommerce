@@ -46,9 +46,9 @@ const loginUser = async (req: Request, res: Response) => {
     // }
     req.session.save()
     res.header('Content-Type', 'application/json')
-    console.log('userId', req.session.userId)
-    console.log('session', req.session)
-    console.log('user', user)
+    // console.log('userId', req.session.userId)
+    // console.log('session', req.session)
+    // console.log('user', user)
     // if (passwordCorrect) {
     //   await prisma.user.update({
     //     where: {
@@ -79,7 +79,7 @@ const loginUser = async (req: Request, res: Response) => {
 }
 
 const getUser = async (req: Request, res: Response) => {
-  console.log('req.session', req.session)
+  console.log('req.session', req.sessionID)
   const id: string = req.params.id
 
   const userData = await prisma.user.findFirst({
@@ -97,6 +97,17 @@ const getUser = async (req: Request, res: Response) => {
       email: true
     }
   })
+
+  const sessionTest = await prisma.session.findUnique({
+    where: {
+      sid: id
+    },
+    select: {
+      user: true
+    }
+  })
+  console.log('id', id)
+  console.log('sessionTest', sessionTest)
   console.log('auth-controller', userData)
   res.send(userData)
 }

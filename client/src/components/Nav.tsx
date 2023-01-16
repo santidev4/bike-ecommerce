@@ -22,6 +22,7 @@ function Nav () {
     if (data) setProfileData(data)
   }, [data])
 
+  console.log('data from nav', data)
   return (
     <>
       <StyledNav>

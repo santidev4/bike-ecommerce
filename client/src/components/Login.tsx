@@ -15,7 +15,7 @@ import { ColorRing } from 'react-loader-spinner'
 function Login () {
   const navigate = useNavigate()
   const { register, reset, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<LoginData>({ mode: 'onChange' })
-  const { mutate, isError, isSuccess } = useLogin()
+  const { data, mutate, isError, isSuccess } = useLogin()
   const [loader, setLoader] = useState<boolean>(false)
   const onSubmit = (data: LoginData) => mutate(data)
 

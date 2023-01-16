@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Request, Response } from 'express'
 import { prisma } from '../../db'
 
@@ -14,7 +15,7 @@ const getDbProducts = async (req: Request, res: Response) => {
 
 const postProduct = async (req: Request, res: Response) => {
   try {
-    const body = req.body
+    const { categories, ...body } = req.body
     const product = await prisma.product.create({
       data: {
         ...body,
@@ -22,18 +23,7 @@ const postProduct = async (req: Request, res: Response) => {
           connect: [{
             id: 4
           }]
-        },
-        brand: {
-          connectOrCreate: {
-            create: {
-              name: 'GT'
-            },
-            where: {
-              name: 'GT'
-            }
-          }
         }
-
       },
       include: {
         categories: true
