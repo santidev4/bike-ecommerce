@@ -24,6 +24,7 @@ function Login () {
       toast.success('Logeado', {
         id: 'success'
       })
+      console.log('data en login', data)
       setLoader(true)
       setInterval(() => {
         navigate('/')

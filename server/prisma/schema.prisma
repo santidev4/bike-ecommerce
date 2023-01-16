@@ -17,6 +17,7 @@ enum Role {
 }
 
 model Product {
+  // TODO poner algunos valores como opcionales
   id           Int               @id @default(autoincrement())
   name         String
   description  String
@@ -27,6 +28,7 @@ model Product {
   height       Int // en cm  
   width        Int
   length       Int
+  active       Boolean @default(true) 
   // Relations
   order_detail order_detail?
   // Products --n-n-- Category
@@ -135,5 +137,6 @@ model Session {
   expiresAt DateTime
   // Relation
   // una session puede tener un user
+  
   user      User?
 }

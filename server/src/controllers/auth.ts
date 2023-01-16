@@ -14,11 +14,14 @@ const createUser = async (req: Request, res: Response) => {
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
 
+    const sessionId = req.sessionID
+
     const user = await prisma.user.create({
       data: {
         username,
         password: passwordHash,
-        email
+        email,
+        sessionId
       }
     })
     res.send(user)
@@ -49,16 +52,17 @@ const loginUser = async (req: Request, res: Response) => {
     // console.log('userId', req.session.userId)
     // console.log('session', req.session)
     // console.log('user', user)
-    // if (passwordCorrect) {
-    //   await prisma.user.update({
-    //     where: {
-    //       id: user.id
-    //     },
-    //     data: {
-    //       sessionId: req.sessionID
-    //     }
-    //   })
-    // }
+    if (passwordCorrect) {
+      // TODO poner try catch
+      await prisma.user.update({
+        where: {
+          id: user.id
+        },
+        data: {
+          sessionId: req.sessionID
+        }
+      })
+    }
 
     // TODO agregar property isAdmin a req.session. Se cambia en node_modules-types-express-session
     // TODO metodos para autorizar admin: jwt, coockie session guardando id del user, encryptar jwt con bcrypt
@@ -80,11 +84,14 @@ const loginUser = async (req: Request, res: Response) => {
 
 const getUser = async (req: Request, res: Response) => {
   console.log('req.session', req.sessionID)
+  console.log('req.session', req.session)
   const id: string = req.params.id
 
   const userData = await prisma.user.findFirst({
     where: {
-      sessionId: id
+      session: {
+        id
+      }
     },
     select: {
       id: true,
@@ -109,6 +116,7 @@ const getUser = async (req: Request, res: Response) => {
   console.log('id', id)
   console.log('sessionTest', sessionTest)
   console.log('auth-controller', userData)
+
   res.send(userData)
 }
 
