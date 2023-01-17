@@ -14,14 +14,13 @@ const createUser = async (req: Request, res: Response) => {
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
 
-    const sessionId = req.sessionID
+    // const sessionId = req.session.id
 
     const user = await prisma.user.create({
       data: {
         username,
         password: passwordHash,
-        email,
-        sessionId
+        email
       }
     })
     res.send(user)

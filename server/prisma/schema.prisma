@@ -86,7 +86,7 @@ model User {
   address   Address[] // Un cliente puede tener muchas direcciones
   // session
   session   Session?   @relation(fields: [sessionId], references: [sid], onUpdate: Cascade)
-  sessionId String?    @unique
+  sessionId String?    @unique  @default(uuid())
 }
 
 model Address {
