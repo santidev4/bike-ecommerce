@@ -20,13 +20,10 @@ const postProduct = async (req: Request, res: Response) => {
       data: {
         ...body,
         categories: {
-          connect: [{
-            id: 4
-          }]
+          connect: categories.map((e: {id: number}) => {
+            return { id: e.id }
+          })
         }
-      },
-      include: {
-        categories: true
       }
     })
     res.send(product)

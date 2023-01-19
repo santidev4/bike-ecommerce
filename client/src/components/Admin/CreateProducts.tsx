@@ -23,6 +23,13 @@ function CreateProducts () {
     console.log('product data', data)
   }
 
+  // const {value:brand_id} = obj.brand_id;
+  // const newObj = {brand_id};
+  // obj = {...obj, ...newObj}
+
+  // delete obj.brand_id.label;
+  // obj.brand_id = obj.brand_id.value
+
   const categoryOptions = categories?.map((e: { name: string, id: number }) => {
     return {
       value: e.id,
@@ -94,7 +101,7 @@ function CreateProducts () {
 
           <Column>
             <label htmlFor="">length</label>
-            <Input type='number' {...register('length', { required: true })} />
+            <Input type='number' {...register('length', { required: true, valueAsNumber: true })} />
           </Column>
         </Row>
 
@@ -121,7 +128,7 @@ function CreateProducts () {
               control={control}
               rules={{ required: 'true' }}
               render={({ field }) => {
-                return <Select options={brandOptions} {...field} closeMenuOnSelect={false} components={animatedComponents} isMulti />
+                return <Select options={brandOptions} {...field} closeMenuOnSelect={true} components={animatedComponents} />
               }}
               />
               { errors.brand_id?.type === 'required' && <span>choose brand</span> }
