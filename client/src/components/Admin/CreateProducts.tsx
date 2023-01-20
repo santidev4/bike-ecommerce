@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { DashboardContainer } from '../styles/Admin/DashboardContainer.styled'
 import { DescriptionProduct } from '../styles/Admin/DescriptionProduct.styled'
 import { ProductsForm, Row, Column } from '../styles/Admin/ProductsForm.styled'
@@ -12,7 +12,7 @@ import { useCreateProduct, useGetCategories, useGetBrands } from '../../api/Admi
 
 function CreateProducts () {
   const animatedComponents = makeAnimated()
-  const { register, formState: { errors, isDirty, isValid }, handleSubmit, control } = useForm<ProductType>({ mode: 'onBlur' })
+  const { register, formState: { errors, isDirty, isValid }, handleSubmit, control, setValue, getValues } = useForm<ProductType>({ mode: 'onBlur' })
 
   const { data: categories } = useGetCategories()
   const { data: brands } = useGetBrands()
@@ -29,6 +29,7 @@ function CreateProducts () {
 
   // delete obj.brand_id.label;
   // obj.brand_id = obj.brand_id.value
+  console.log('getValues', getValues('brand_id'))
 
   const categoryOptions = categories?.map((e: { name: string, id: number }) => {
     return {
@@ -44,8 +45,11 @@ function CreateProducts () {
     }
   })
 
-  console.log('categoryOptions', categoryOptions)
-  console.log('brandOptions', brandOptions)
+  useEffect(() => {
+    // TODO setvalue of brand_id
+    console.log('getValues(', getValues())
+    setValue('brand_id', 2)
+  }, [setValue])
 
   return (
     <DashboardContainer>
@@ -128,7 +132,12 @@ function CreateProducts () {
               control={control}
               rules={{ required: 'true' }}
               render={({ field }) => {
-                return <Select options={brandOptions} {...field} closeMenuOnSelect={true} components={animatedComponents} />
+                return <Select
+                          options={brandOptions}
+                          {...field}
+                          closeMenuOnSelect={true}
+                          components={animatedComponents}
+                           />
               }}
               />
               { errors.brand_id?.type === 'required' && <span>choose brand</span> }
@@ -136,7 +145,8 @@ function CreateProducts () {
           </Row>
 
           <Row>
-            <ButtonSubmit disabled={!isDirty || !isValid} value='Crear' />
+            <ButtonSubmit
+             disabled={!isDirty || !isValid} value='Crear' />
           </Row>
 
         </Column>
