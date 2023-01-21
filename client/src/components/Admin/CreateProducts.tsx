@@ -5,14 +5,14 @@ import { ProductsForm, Row, Column } from '../styles/Admin/ProductsForm.styled'
 import { ButtonSubmit } from '../styles/Auth/ButtonSubmit.styled'
 import { Input } from '../styles/Auth/Input.styled'
 import { useForm, Controller } from 'react-hook-form'
-import { ProductType } from '../../types/AdminTypes'
+import { BrandType, ProductType } from '../../types/AdminTypes'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { useCreateProduct, useGetCategories, useGetBrands } from '../../api/AdminHooks'
 
 function CreateProducts () {
   const animatedComponents = makeAnimated()
-  const { register, formState: { errors, isDirty, isValid }, handleSubmit, control, setValue, getValues } = useForm<ProductType>({ mode: 'onBlur' })
+  const { register, formState: { errors, isDirty, isValid }, handleSubmit, control } = useForm<ProductType>({ mode: 'onBlur' })
 
   const { data: categories } = useGetCategories()
   const { data: brands } = useGetBrands()
@@ -29,7 +29,6 @@ function CreateProducts () {
 
   // delete obj.brand_id.label;
   // obj.brand_id = obj.brand_id.value
-  console.log('getValues', getValues('brand_id'))
 
   const categoryOptions = categories?.map((e: { name: string, id: number }) => {
     return {
@@ -38,7 +37,7 @@ function CreateProducts () {
     }
   })
 
-  const brandOptions = brands?.map((e: { name: string, id: number }) => {
+  const brandOptions: BrandType[] = brands?.map((e: { name: string, id: number }) => {
     return {
       value: e.id,
       label: e.name
@@ -47,9 +46,10 @@ function CreateProducts () {
 
   useEffect(() => {
     // TODO setvalue of brand_id
-    console.log('getValues(', getValues())
-    setValue('brand_id', 2)
-  }, [setValue])
+    // const brandIdObj = getValues('brand_id')
+    // if (brandIdObj) setValue('brand_id', brandIdObj)
+    // console.log('brandIdObj', brandIdObj)
+  }, [onSubmit])
 
   return (
     <DashboardContainer>
@@ -131,12 +131,18 @@ function CreateProducts () {
               name="brand_id"
               control={control}
               rules={{ required: 'true' }}
-              render={({ field }) => {
+              render={({ field: { onChange, value, name, ref } }) => {
                 return <Select
+                          ref={ref}
                           options={brandOptions}
-                          {...field}
+                          // {...field}
                           closeMenuOnSelect={true}
                           components={animatedComponents}
+                          value={brandOptions.find((c) => c.value === value[0].value)}
+                          name={name}
+                          onChange={(selectedOptions: BrandType) => {
+                            onChange(selectedOptions.value)
+                          }}
                            />
               }}
               />
@@ -145,8 +151,7 @@ function CreateProducts () {
           </Row>
 
           <Row>
-            <ButtonSubmit
-             disabled={!isDirty || !isValid} value='Crear' />
+            <ButtonSubmit disabled={!isDirty || !isValid} value='Crear' />
           </Row>
 
         </Column>
