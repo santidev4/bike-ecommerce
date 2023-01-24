@@ -3,14 +3,14 @@ import { DashboardContainer } from '../styles/Admin/DashboardContainer.styled'
 import { Column, ProductsForm } from '../styles/Admin/ProductsForm.styled'
 import { Input } from '../styles/Auth/Input.styled'
 import { useForm } from 'react-hook-form'
-import { BrandType } from '../../types/AdminTypes'
+import { CreateBrandType } from '../../types/AdminTypes'
 import { useCreateBrand } from '../../api/AdminHooks'
 import { ButtonSubmit } from '../styles/Auth/ButtonSubmit.styled'
 
 function CreateBrand () {
-  const { register, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<BrandType>({ mode: 'onBlur' })
+  const { register, formState: { errors, isDirty, isValid }, handleSubmit } = useForm<CreateBrandType>({ mode: 'onBlur' })
   const { mutate } = useCreateBrand()
-  const onSubmit = (data: BrandType) => mutate(data)
+  const onSubmit = (data: CreateBrandType) => mutate(data)
   return (
     <DashboardContainer>
       <ProductsForm onSubmit={handleSubmit(onSubmit)}>

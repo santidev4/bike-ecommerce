@@ -2,6 +2,10 @@ export interface CategoryType {
   name: string
 }
 
+export interface CreateBrandType {
+  name: string
+}
+
 export interface BrandType {
   label: string,
   value: number
