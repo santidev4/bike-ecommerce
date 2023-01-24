@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import { Request, Response } from 'express'
 import { prisma } from '../../db'
+import { brandIdToId, categoriesToId } from './helpers/controllers.helpers'
 
 const getDbProducts = async (req: Request, res: Response) => {
   try {
@@ -15,15 +16,23 @@ const getDbProducts = async (req: Request, res: Response) => {
 
 const postProduct = async (req: Request, res: Response) => {
   try {
-    const { categories, ...body } = req.body
+    const { categories, brand_id, ...body } = req.body
+    // if (typeof brand_id === 'object') {
+    //   delete brand_id.label
+    //   brand_id = brand_id.value
+    // }
+
+    const newBrandId = brandIdToId(brand_id)
+    const newCategories = categoriesToId(categories)
     const product = await prisma.product.create({
       data: {
         ...body,
         categories: {
-          connect: categories.map((e: {id: number}) => {
+          connect: newCategories.map((e: {id: number}) => {
             return { id: e.id }
           })
-        }
+        },
+        brand_id: newBrandId
       }
     })
     res.send(product)

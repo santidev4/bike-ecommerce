@@ -20,15 +20,7 @@ function CreateProducts () {
 
   const onSubmit = (data: ProductType) => {
     mutate(data)
-    console.log('product data', data)
   }
-
-  // const {value:brand_id} = obj.brand_id;
-  // const newObj = {brand_id};
-  // obj = {...obj, ...newObj}
-
-  // delete obj.brand_id.label;
-  // obj.brand_id = obj.brand_id.value
 
   const categoryOptions = categories?.map((e: { name: string, id: number }) => {
     return {
@@ -45,10 +37,7 @@ function CreateProducts () {
   })
 
   useEffect(() => {
-    // TODO setvalue of brand_id
-    // const brandIdObj = getValues('brand_id')
-    // if (brandIdObj) setValue('brand_id', brandIdObj)
-    // console.log('brandIdObj', brandIdObj)
+   
   }, [onSubmit])
 
   return (
@@ -131,18 +120,12 @@ function CreateProducts () {
               name="brand_id"
               control={control}
               rules={{ required: 'true' }}
-              render={({ field: { onChange, value, name, ref } }) => {
+              render={({ field }) => {
                 return <Select
-                          ref={ref}
                           options={brandOptions}
-                          // {...field}
+                          {...field}
                           closeMenuOnSelect={true}
                           components={animatedComponents}
-                          value={brandOptions.find((c) => c.value === value[0].value)}
-                          name={name}
-                          onChange={(selectedOptions: BrandType) => {
-                            onChange(selectedOptions.value)
-                          }}
                            />
               }}
               />
