@@ -1,0 +1,12 @@
+########  WheelSize #########
+
+### Get wheel size
+GET http://localhost:3001/wheel_size
+
+### CreatingWheel Size
+POST http://localhost:3001/wheel_size
+Content-Type: application/json
+
+{
+  "size": 20
+}

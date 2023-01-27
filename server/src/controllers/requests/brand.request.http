@@ -1,0 +1,20 @@
+############  BRANDS  ###########
+
+### Create Brand
+POST http://localhost:3001/brands
+Content-Type: application/json
+
+{
+  "name": "GT"
+}
+
+### Get Brands
+GET http://localhost:3001/brands
+
+### Delete Brand
+DELETE http://localhost:3001/brands
+Content-Type: application/json
+
+{
+  "id": 1
+}

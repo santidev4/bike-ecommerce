@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { prisma } from '../app'
 
-const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
+export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
   const sessionId = req.session.userId
 
   try {

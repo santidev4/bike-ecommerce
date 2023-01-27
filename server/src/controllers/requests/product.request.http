@@ -1,0 +1,39 @@
+##########  PRODUCT  ##########
+
+### Get Products
+GET http://localhost:3001/products
+
+### Create Product
+POST http://localhost:3001/products
+Content-Type: application/json
+
+{
+  "name": "testing",
+  "description": "esta es la descripcion",
+  "price": 2000.00,
+  "img": "http://www.imagenes.net",
+  "stock": 13,
+  "weight": 15,
+  "height": 17,
+  "width": 19,
+  "length": 21,
+  "categories": [
+    {
+      "label": "bicicletas",
+      "value": 1
+    }
+  ],
+  "brand_id": {
+    "label": "GT",
+    "value": 1
+  },
+  "wheel_size_id": 1
+}
+
+### Delete Product
+DELETE http://localhost:3001/products
+Content-Type: application/json
+
+{
+  "id": 1
+}

@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native"]
 }
 
@@ -18,32 +18,45 @@ enum Role {
 
 model Product {
   // TODO poner algunos valores como opcionales
-  id           Int               @id @default(autoincrement())
-  name         String
-  description  String
-  price        Float
-  img          String
-  stock        Int
-  weight       Int
-  height       Int // en cm  
-  width        Int
-  length       Int
-  active       Boolean @default(true) 
+  id            Int           @id @default(autoincrement())
+  name          String
+  description   String
+  price         Float
+  img           String
+  stock         Int
+  weight        Int
+  height        Int // en cm  
+  width         Int
+  length        Int
+  active        Boolean       @default(true)
   // Relations
-  order_detail order_detail?
+  order_detail  order_detail?
   // Products --n-n-- Category
-  categories   Category[]
+  categories    Category[]
   // Una brand puede tener muchos products
-  brand_id     Int
-  brand        Brand            @relation(fields: [brand_id], references: [id])
+  brand_id      Int
+  brand         Brand         @relation(fields: [brand_id], references: [id])
+  // Un rodado puede tener muchos productos
+  wheel_size_id Int
+  Wheel_Size  Wheel_Size?  @relation(fields: [wheel_size_id], references: [id])
+}
+
+model Wheel_Size {
+  id   Int @id @default(autoincrement())
+  size Int
+  Products  Product[]
 }
 
 model Category {
-  id       Int               @id @default(autoincrement())
-  name     String            @unique
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
   // Relations
   // Products --n-n-- Category
-  products Product[]
+  products  Product[]
+  // Puede haber un parent que tiene muchos childs
+  parent_id Int?       @unique
+  parent    Category?  @relation("parent", fields: [parent_id], references: [id])
+  childs    Category[] @relation("parent")
 }
 
 // Tabla intermedia explicita para relacionar categorias con productos y viceversa
@@ -85,8 +98,8 @@ model User {
   orders    Order[] //  Un cliente puede tener muchas ordenes
   address   Address[] // Un cliente puede tener muchas direcciones
   // session
-  session   Session?   @relation(fields: [sessionId], references: [sid], onUpdate: Cascade)
-  sessionId String?    @unique  @default(uuid())
+  session   Session?  @relation(fields: [sessionId], references: [sid], onUpdate: Cascade)
+  sessionId String?   @unique @default(uuid())
 }
 
 model Address {
@@ -137,6 +150,6 @@ model Session {
   expiresAt DateTime
   // Relation
   // una session puede tener un user
-  
-  user      User?
+
+  user User?
 }

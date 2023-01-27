@@ -1,0 +1,29 @@
+############  CATEGORIES  #############
+
+### Create category
+POST http://localhost:3001/categories
+Content-Type: application/json
+
+{
+  "name": "bicicletas"
+}
+
+### Create Subcategory
+POST http://localhost:3001/categories
+Content-Type: application/json
+
+{
+  "name": "Playeras",
+  "parent_id": 1
+}
+
+### Get categories
+GET http://localhost:3001/categories
+
+### Delete Category
+DELETE http://localhost:3001/categories
+Content-Type: application/json
+
+{
+  "name": "Playeras"
+}
