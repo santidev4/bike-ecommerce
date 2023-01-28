@@ -131,7 +131,7 @@ export const getWheelSize = async (req: Request, res: Response) => {
 
 export const createWheelSize = async (req: Request, res: Response) => {
   try {
-    const { size } = req.body
+    const size = req.body
     const wheelSize = await prisma.wheel_Size.create({
       data: size
     })
