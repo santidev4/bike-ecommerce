@@ -1,11 +1,13 @@
 import styled from 'styled-components'
 
-export const SideBarContainer = styled.div`
+export const AdminBarContainer = styled.div`
   position: sticky;
-  background-color: hsl(180, 97%, 97%);
-  width: 20%;
+  background-color: hsl(100, 7%, 97%);
+  width: 100vw;
 
   ul {
+    display: flex;
+    justify-content: space-around;
     li {
       list-style: none;
 

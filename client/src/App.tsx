@@ -12,26 +12,39 @@ import Admin from './pages/Admin'
 import CreateAccount from './components/CreateAccount'
 import Login from './components/Login'
 import Profile from './pages/Profile'
+import CreateProducts from './components/Admin/CreateProducts'
+import CreateCategory from './components/Admin/CreateCategory'
+import CreateBrand from './components/Admin/CreateBrand'
+// import AdminNavBar from './components/Admin/AdminNavBar'
 
 function App () {
   return (
     <>
       <BrowserRouter>
         <Nav />
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/bikes' element={<Bikes />} />
-            <Route path='/accesories' element={<Accesories />} />
-            <Route path='/contact' element={<Contact />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/auth' element={<Auth />} />
-            <Route path='/admin' element={<Admin />} />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/bikes' element={<Bikes />} />
+          <Route path='/accesories' element={<Accesories />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/auth' element={<Auth />} />
+        </Routes>
 
-            <Route path='/new-account' element={ <CreateAccount /> } />
-            <Route path='/login' element={ <Login /> } />
+        <Routes>
+        <Route path='/admin' element={<Admin />}>
+          <Route path='/admin/products' element={<CreateProducts />} />
+          <Route path='/admin/categories' element={<CreateCategory />} />
+          <Route path='/admin/brands' element={<CreateBrand />} />
+        </Route>
+        </Routes>
 
-            <Route path='/profile/:id' element={ <Profile /> } />
-          </Routes>
+        <Routes>
+          <Route path='/new-account' element={<CreateAccount />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/profile/:id' element={<Profile />} />
+        </Routes>
+
         <Footer />
       </BrowserRouter>
     </>

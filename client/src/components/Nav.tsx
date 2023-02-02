@@ -4,7 +4,7 @@ import { Logo } from './styles/NavStyles/Logo.styled'
 import { Menu } from './styles/NavStyles/Menu.styled'
 import { Utils } from './styles/NavStyles/Utils.styled'
 import SearchBar from './Nav/SearchBar'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import useStore from '../store/useStore'
 import { useGetUserData } from '../api/AuthHooks/useGetUserData'
 import ProfileNav from './Nav/ProfileNav'
@@ -27,17 +27,17 @@ function Nav () {
     <>
       <StyledNav>
 
-        <Logo><Link to='/'>Manija</Link></Logo>
+        <Logo><NavLink to='/'>Manija</NavLink></Logo>
 
         <Menu>
           <ul>
-            <li><Link to='/bikes'>Bikes</Link></li>
-            <li><Link to='/accesories'>Accesories</Link></li>
-            <li><Link to='/about'>About</Link></li>
-            <li><Link to='contact'>Contact</Link></li>
+            <li><NavLink to='/bikes'>Bikes</NavLink></li>
+            <li><NavLink to='/accesories'>Accesories</NavLink></li>
+            <li><NavLink to='/about'>About</NavLink></li>
+            <li><NavLink to='contact'>Contact</NavLink></li>
             {
               data?.role === 'admin' &&
-            <li><Link to='/admin'>Admin</Link></li>
+            <li><NavLink to='/admin'>Admin</NavLink></li>
             }
           </ul>
         </Menu>

@@ -1,12 +1,14 @@
-export interface CategoryType {
-  name: string
+export interface CreateCategoryType {
+  name: string,
+  parent_id?: string,
+  id?: number
 }
 
 export interface CreateBrandType {
   name: string
 }
 
-export interface BrandType {
+export interface SelectOptionsType {
   label: string,
   value: number
 }
@@ -22,5 +24,5 @@ export type ProductType = {
   brand_id: number,
   img: string,
   description: string,
-  categories: CategoryType[]
+  categories: CreateCategoryType[]
 }

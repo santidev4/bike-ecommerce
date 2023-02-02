@@ -37,6 +37,21 @@ export const postProduct = async (req: Request, res: Response) => {
   }
 }
 
+export const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const { id, data } = req.body
+    const updatedProduct = await prisma.product.update({
+      where: {
+        id
+      },
+      data
+    })
+    res.send(updatedProduct)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.body
@@ -52,7 +67,11 @@ export const deleteProduct = async (req: Request, res: Response) => {
 
 export const postCategory = async (req: Request, res: Response) => {
   try {
-    const body = req.body
+    let body = req.body
+    if (body?.parent_id) {
+      const parent_id = brandIdToId(body?.parent_id)
+      body = { ...body, parent_id }
+    }
     const category = await prisma.category.create({
       data: body
     })
@@ -141,10 +160,25 @@ export const createWheelSize = async (req: Request, res: Response) => {
   }
 }
 
+export const deleteWheelSize = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.body
+    const deletedWheelSize = await prisma.wheel_Size.delete({
+      where: {
+        id
+      }
+    })
+    res.send(deletedWheelSize)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 module.exports = {
   getDbProducts,
   postProduct,
   deleteProduct,
+  updateProduct,
   postCategory,
   getCategories,
   deleteCategory,
@@ -152,5 +186,6 @@ module.exports = {
   getBrands,
   deleteBrand,
   getWheelSize,
-  createWheelSize
+  createWheelSize,
+  deleteWheelSize
 }

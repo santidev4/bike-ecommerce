@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from 'react-query'
 import axios from 'axios'
-import { ProductType, CategoryType, CreateBrandType } from '../../types/AdminTypes'
+import { ProductType, CreateCategoryType, CreateBrandType } from '../../types/AdminTypes'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
@@ -42,7 +42,7 @@ export const useGetBrands = () => {
 }
 
 export const useCreateCategory = () => {
-  return useMutation('createCategory', async (category: CategoryType) => {
+  return useMutation('createCategory', async (category: CreateCategoryType) => {
     try {
       const response = await axios.post(`${BACKEND_URL}/categories`, category, {
         withCredentials: true

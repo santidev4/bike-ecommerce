@@ -5,7 +5,7 @@ import { ProductsForm, Row, Column } from '../styles/Admin/ProductsForm.styled'
 import { ButtonSubmit } from '../styles/Auth/ButtonSubmit.styled'
 import { Input } from '../styles/Auth/Input.styled'
 import { useForm, Controller } from 'react-hook-form'
-import { BrandType, ProductType } from '../../types/AdminTypes'
+import { ProductType, SelectOptionsType } from '../../types/AdminTypes'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { useCreateProduct, useGetCategories, useGetBrands } from '../../api/AdminHooks'
@@ -22,14 +22,14 @@ function CreateProducts () {
     mutate(data)
   }
 
-  const categoryOptions = categories?.map((e: { name: string, id: number }) => {
+  const categoryOptions: SelectOptionsType[] = categories?.map((e: { name: string, id: number }) => {
     return {
       value: e.id,
       label: e.name
     }
   })
 
-  const brandOptions: BrandType[] = brands?.map((e: { name: string, id: number }) => {
+  const brandOptions: SelectOptionsType[] = brands?.map((e: { name: string, id: number }) => {
     return {
       value: e.id,
       label: e.name
@@ -37,12 +37,11 @@ function CreateProducts () {
   })
 
   useEffect(() => {
-   
+
   }, [onSubmit])
 
   return (
     <DashboardContainer>
-
       <ProductsForm onSubmit={handleSubmit(onSubmit)}>
 
         <Row>

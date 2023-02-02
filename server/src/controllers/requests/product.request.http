@@ -37,3 +37,14 @@ Content-Type: application/json
 {
   "id": 1
 }
+
+### Update Product
+PATCH http://localhost:3001/products
+Content-Type: application/json
+
+{
+  "id": 2,
+  "data": {
+    "price": 25000
+  }
+}
